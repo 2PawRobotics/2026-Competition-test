@@ -1,5 +1,6 @@
 package frc.robot;
 
+import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.events.EventTrigger;
@@ -44,7 +45,7 @@ public class RobotContainer {
     public final static CommandXboxController driverController = new CommandXboxController(ControllerConstants.driverGamepadPort);
     public final static CommandXboxController operatorController = new CommandXboxController(ControllerConstants.operatorGamepadPort);
     public final static Joystick ButtonPanel = new Joystick(ControllerConstants.operatorGamepadPort);
-    
+
 
     //Name Commands
     private final PointCmd pointCmd;

@@ -103,7 +103,7 @@ public class SwerveSys extends SubsystemBase {
         return omegaOverrideRadPerSec.isPresent();
     }
 
-    private final Pigeon2 imu = new Pigeon2(CANDevices.imuId);
+    private final Pigeon2 imu = new Pigeon2(CANDevices.imuId, "CANivore");
 
     // Odometry for the robot, measured in meters for linear motion and radians for rotational motion
     // Takes in kinematics and robot angle for parameters

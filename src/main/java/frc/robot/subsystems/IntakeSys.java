@@ -29,7 +29,7 @@ public class IntakeSys extends SubsystemBase {
 
         SparkFlexConfig rollerConfig = new SparkFlexConfig();
         rollerConfig
-            .inverted(false)
+            .inverted(true)
             .idleMode(IdleMode.kCoast)
             .smartCurrentLimit(RollerConstants.stallLimitAmps, RollerConstants.freeLimitAmps, RollerConstants.maxRPM);
         rollerConfig.encoder

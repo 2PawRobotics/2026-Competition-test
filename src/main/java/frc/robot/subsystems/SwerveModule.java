@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
@@ -56,7 +57,7 @@ public class SwerveModule extends SubsystemBase {
         driveEnc = driveMtr.getEncoder();
         steerEnc = steerMtr.getEncoder();
 
-        canCoder = new CANcoder(canCoderId);
+        canCoder = new CANcoder(canCoderId, canbus);
 
         steerController = steerMtr.getClosedLoopController();
         driveController = driveMtr.getClosedLoopController();
@@ -94,6 +95,8 @@ public class SwerveModule extends SubsystemBase {
         // Initializes the steer encoder position to the CANCoder position, accounting for offset.
         steerEnc.setPosition(getCanCoderAngle().getRadians() - offset.getRadians());
     }
+
+    CANBus canbus = new CANBus("CANivore");
 
     /**
      * Returns the current position of the module.
