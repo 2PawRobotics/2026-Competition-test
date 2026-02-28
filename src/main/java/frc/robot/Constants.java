@@ -131,10 +131,10 @@ public class Constants {
         // The bolt heads should be pointing to the right. These values are subtracted from the CANCoder reading,
         // so they should be the raw CANCoder value when set straight. These values should be between 0 and 360
         // degrees.
-        public static final Rotation2d frontLeftModOffset = Rotation2d.fromDegrees(109.07244); // 122.43, 318.164, 135.97, 124.09, -120.23
-        public static final Rotation2d frontRightModOffset = Rotation2d.fromDegrees(-140.80068); // 184.12, 234.756, 134.5, 18.72, 87.28
-        public static final Rotation2d backLeftModOffset = Rotation2d.fromDegrees(64.33596); // 62, 252.15804, -164.5, -150.01
-        public static final Rotation2d backRightModOffset = Rotation2d.fromDegrees(-89.4726); // 82.7, 252.15804, 40.07, 14.5
+        public static final Rotation2d frontLeftModOffset = Rotation2d.fromDegrees(109.07244);
+        public static final Rotation2d frontRightModOffset = Rotation2d.fromDegrees(-140.80068); 
+        public static final Rotation2d backLeftModOffset = Rotation2d.fromDegrees(64.33596);
+        public static final Rotation2d backRightModOffset = Rotation2d.fromDegrees(-89.4726);
 
         // You may want to change this value.
         public static final int driveCurrentLimitAmps = 70;
@@ -172,8 +172,8 @@ public class Constants {
 
         // Auto aim PID values should ideally be the same as the PathPlanner rotation ones. They are separate for safe measure.
 
-        public static final double autoAimkP = 10.9;
-        public static final double autoAimkD = 0.5;
+        public static final double autoAimkP = 15; //13
+        public static final double autoAimkD = 0.5; //0.5
 
         public static final double autoAimToleranceDeg = 0.2;
 
@@ -194,7 +194,7 @@ public class Constants {
 
     public class RollerConstants {
 
-        public static final double rollerRPM = 1750;
+        public static final double rollerRPM = 1200;
 
         public static final double rollerkP = 0.0005;
         public static final double rollerkI = 0;
@@ -281,8 +281,8 @@ public class Constants {
         public static final double targetAreaPercentThreshold = 0.15;
 
         public static final double tagHeight = 44.5;
-        public static final double limelightHeight = 21.25;
-        public static final double limelightAngle = 25.25;
+        public static final double limelightHeight = 19.5;
+        public static final double limelightAngle = 6.45;
     }
 
     public class FieldConstants {

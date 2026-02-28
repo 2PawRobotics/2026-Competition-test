@@ -20,12 +20,13 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.CANDevices;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.util.limelight.LimelightPoseEstimator;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -192,7 +193,15 @@ public class SwerveSys extends SubsystemBase {
                 poseEstimator.addVisionMeasurement(limelightPose.get(), limelightPoseEstimator.getCaptureTimestamp());
             }
         }
-    }
+      }
+
+      if(RobotContainer.driverController.rightTrigger().getAsBoolean() == true) {
+        speedFactor = 0.1;
+      } 
+      else {
+        speedFactor = 1;
+      }
+
     }
     
     /**
@@ -307,6 +316,11 @@ public class SwerveSys extends SubsystemBase {
         setModuleStates(DriveConstants.kinematics.toSwerveModuleStates(chassisSpeeds));
     }
 
+    /**
+     * A method to get the field relatie velocity of the robot
+     * 
+     * @return Field Relative velocity in Meters Per Second
+     */
     public Translation2d getFieldRelativeVelocity() {
         return new Translation2d(getChassisSpeeds().vxMetersPerSecond, getChassisSpeeds().vyMetersPerSecond).rotateBy(getHeading());
     }

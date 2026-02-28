@@ -1,6 +1,5 @@
 package frc.robot;
 
-import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.events.EventTrigger;
@@ -10,52 +9,53 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.VisionConstants;
+import frc.robot.subsystems.SwerveSys;
+import frc.robot.util.limelight.LimelightHelpers;
+import frc.robot.subsystems.SwerveRotation;
+import frc.robot.subsystems.AgitatorSys;
+import frc.robot.subsystems.ShooterSys;
+import frc.robot.subsystems.IntakeSys;
+
 import frc.robot.commands.drivetrain.ArcadeDriveCmd;
 import frc.robot.commands.drivetrain.LockCmd;
-import frc.robot.subsystems.SwerveSys;
-import frc.robot.subsystems.SwerveRotation;
 import frc.robot.commands.drivetrain.PointCmd;
-import frc.robot.commands.drivetrain.AutoShootCmd;
-import frc.robot.subsystems.ShooterSys;
-import frc.robot.commands.drivetrain.AutoAimCmd;
-import frc.robot.commands.drivetrain.RunShooterFFCmd;
-import frc.robot.subsystems.IntakeSys;
-import frc.robot.commands.functions.IntakeCmd;
-import frc.robot.subsystems.AgitatorSys;
-import frc.robot.commands.drivetrain.AgitatorCmd;
 import frc.robot.commands.drivetrain.AimToHubCmd;
+import frc.robot.commands.functions.AgitatorCmd;
+import frc.robot.commands.functions.AutoAimCmd;
+import frc.robot.commands.functions.AutoShootCmd;
+import frc.robot.commands.functions.IntakeCmd;
 import frc.robot.commands.functions.IntakeStopCmd;
+import frc.robot.commands.functions.RunShooterFFCmd;
 
 public class RobotContainer {
     
     // Initialize subsystems.
     private final SwerveSys swerveSys = new SwerveSys();
     private final SwerveRotation swerveRotation = new SwerveRotation(swerveSys);
-    private final ShooterSys shooterSys = new ShooterSys();
+    private final ShooterSys shooterSys = new ShooterSys(swerveSys);
     private final IntakeSys intakeSys = new IntakeSys();
     private final AgitatorSys agitatorSys = new AgitatorSys();
 
     //Initialize joysticks.
     public final static CommandXboxController driverController = new CommandXboxController(ControllerConstants.driverGamepadPort);
     public final static CommandXboxController operatorController = new CommandXboxController(ControllerConstants.operatorGamepadPort);
-    public final static Joystick ButtonPanel = new Joystick(ControllerConstants.operatorGamepadPort);
-
 
     //Name Commands
-    private final PointCmd pointCmd;
-    private final AutoShootCmd testCmd;
-    private final AutoAimCmd autoPointCmd;
-    private final RunShooterFFCmd runShooterFFCmd;
-    private final IntakeCmd intakeCmd;
-    private final AgitatorCmd agitatorCmd;
-    private final AimToHubCmd aimToHubCmd;
-    private final IntakeStopCmd intakeStopCmd;
+    PointCmd pointCmd;
+    AutoShootCmd testCmd;
+    AutoAimCmd autoPointCmd;
+    RunShooterFFCmd runShooterFFCmd;
+    IntakeCmd intakeCmd;
+    AgitatorCmd agitatorCmd;
+    AimToHubCmd aimToHubCmd;
+    IntakeStopCmd intakeStopCmd;
 
     //Initialize auto selector.
     SendableChooser<Command> autoSelector = new SendableChooser<Command>();
@@ -99,8 +99,9 @@ public class RobotContainer {
     }
 
     private void configOperatorBindings() {
-
-        
+    operatorController.b().whileTrue(new AgitatorCmd(agitatorSys));
+    operatorController.leftTrigger().whileTrue(new IntakeCmd(intakeSys));
+    operatorController.rightTrigger().whileTrue(new RunShooterFFCmd(shooterSys));
     }
 
     public void configDriverBindings() {
@@ -118,15 +119,7 @@ public class RobotContainer {
         driverController.axisGreaterThan(XboxController.Axis.kLeftTrigger.value, ControllerConstants.triggerPressedThreshhold)
            .whileTrue(new LockCmd(swerveSys));
 
-    driverController.rightBumper().whileTrue(new PointCmd(swerveRotation));
-    driverController.leftBumper().whileTrue(new IntakeCmd(intakeSys));
-    driverController.a().whileTrue(new AgitatorCmd(agitatorSys));
-    driverController.rightTrigger().whileTrue(new RunShooterFFCmd(shooterSys));
-    driverController.b().whileTrue(aimToHubCmd);
-    //driverController.a().whileTrue(shooterSys.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-    //driverController.b().whileTrue(shooterSys.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-    //driverController.y().whileTrue(shooterSys.sysIdDynamic(SysIdRoutine.Direction.kForward));
-    //driverController.x().whileTrue(shooterSys.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+        driverController.rightTrigger().whileTrue(aimToHubCmd);
     }
 
     public Command getAutonomousCommand() {
@@ -165,6 +158,9 @@ public class RobotContainer {
         SmartDashboard.putNumber("Limelight Distance In", shooterSys.getDistanceInInches());
         SmartDashboard.putNumber("Shooter RPM", shooterSys.getShooterRPM());
         SmartDashboard.putNumber("Desired Shooter RPM", shooterSys.desiredRPM());
+        SmartDashboard.putNumber("Limelight TY", LimelightHelpers.getTY(VisionConstants.frontLimelightName));
+
+        SmartDashboard.putNumberArray("Pose in Target Space", LimelightHelpers.getBotPose_TargetSpace(VisionConstants.frontLimelightName));
 
     }   
 }

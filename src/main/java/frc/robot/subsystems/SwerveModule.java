@@ -8,8 +8,8 @@ import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkBase.ControlType;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
@@ -178,6 +178,7 @@ public class SwerveModule extends SubsystemBase {
         return newTarget;
     }
 
+    
     /**
      * Sets the desired state of the swerve module and optimizes it.
      * <p>If closed-loop, uses PID and a feedforward to control the speed.
@@ -197,7 +198,7 @@ public class SwerveModule extends SubsystemBase {
         double angleErrorRad = desiredState.angle.getRadians() - getSteerEncAngle().getRadians();
         desiredState.speedMetersPerSecond *= Math.cos(angleErrorRad);
 
-        steerController.setReference(
+        steerController.setSetpoint(
             calculateAdjustedAngle(
                 desiredState.angle.getRadians(),
                 getSteerEncAngle().getRadians()),
@@ -208,12 +209,12 @@ public class SwerveModule extends SubsystemBase {
             driveMtr.set(desiredState.speedMetersPerSecond / DriveConstants.freeMetersPerSecond);
         }
         else {
-            driveController.setReference(0.0,ControlType.kPosition);
+            driveController.setSetpoint(0.0,ControlType.kPosition);
         }
     }
 
     public void runCharacterization(double volts) {
-        steerController.setReference(
+        steerController.setSetpoint(
             0.0,
             ControlType.kPosition
         );

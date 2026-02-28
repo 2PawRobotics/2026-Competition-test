@@ -23,7 +23,8 @@ import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkBase.ControlType;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.ResetMode;
+import com.revrobotics.PersistMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
@@ -34,8 +35,10 @@ public class ShooterSys extends SubsystemBase {
     SparkFlex shooterMtr;
     RelativeEncoder shooterEnc;
     SparkClosedLoopController shooterController;
+    SwerveSys swerveSys;
 
-    public ShooterSys() {
+    public ShooterSys(SwerveSys swerveSys) {
+        this.swerveSys = swerveSys;
         
         shooterMtr = new SparkFlex(CANDevices.shooterMtrId, MotorType.kBrushless);
         shooterEnc = shooterMtr.getEncoder();
@@ -54,7 +57,7 @@ public class ShooterSys extends SubsystemBase {
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
             .pid(ShooterConstants.shooterkP, ShooterConstants.shooterkI, ShooterConstants.shooterkD);
 
-        shooterMtr.configure(shooterConfig, ResetMode.kResetSafeParameters, com.revrobotics.spark.SparkBase.PersistMode.kPersistParameters);
+        shooterMtr.configure(shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     }
 
@@ -121,7 +124,10 @@ public class ShooterSys extends SubsystemBase {
         double totalAngleRad = 
         Math.toRadians(totalAngleDeg);
 
-        return (VisionConstants.tagHeight - VisionConstants.limelightHeight) / Math.tan(totalAngleRad);
+        double MetersPerSecondtoInchesPerSecondConverison = 39.37;
+
+        return ((VisionConstants.tagHeight - VisionConstants.limelightHeight) / Math.tan(totalAngleRad)) + 
+        (swerveSys.getFieldRelativeVelocity().getY() * MetersPerSecondtoInchesPerSecondConverison);
     }
 
     public double getDistanceInFeet() {
@@ -130,14 +136,14 @@ public class ShooterSys extends SubsystemBase {
 
     public double desiredRPM() {
         
-        double minRPM = 2000;
+        double minRPM = 2925;
         double distance = getDistanceInFeet();
 
-        if(distance <= 3) {
+        if(distance <= 4) {
             return minRPM;
         }
         else {
-            return minRPM + ((distance-3) * 250);
+            return 5604.9 * (Math.pow(LimelightHelpers.getTY(VisionConstants.frontLimelightName), -0.202));
         }
     }
 

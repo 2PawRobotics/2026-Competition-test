@@ -60,7 +60,7 @@ public class AimToHubCmd extends Command {
         
         SmartDashboard.putNumber("target heading deg", targetHeading.getDegrees());
 
-        PPHolonomicDriveController.setRotationTargetOverride(() -> Optional.of(targetHeading));
+        PPHolonomicDriveController.overrideRotationFeedback(() -> targetHeading.getRadians());
 
         if(Math.abs(swerveSys.getHeading().getDegrees() - targetHeading.getDegrees()) > AutoConstants.autoAimToleranceDeg) {
             double aimRadPerSec = aimController.calculate(swerveSys.getHeading().getRadians(), targetHeading.getRadians());
@@ -76,7 +76,9 @@ public class AimToHubCmd extends Command {
     @Override
     public void end(boolean isInterrupted) {
         swerveSys.setOmegaOverrideRadPerSec(Optional.empty());
-        PPHolonomicDriveController.setRotationTargetOverride(() -> Optional.empty());
+        // Provide a DoubleSupplier; use NaN to indicate "no override" (PPHolonomicDriveController
+        // implementations commonly check for NaN to disable an override).
+        PPHolonomicDriveController.overrideRotationFeedback(() -> Double.NaN);
     }
 
     @Override

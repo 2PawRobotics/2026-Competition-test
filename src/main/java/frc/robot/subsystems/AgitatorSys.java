@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -35,7 +34,7 @@ public class AgitatorSys extends SubsystemBase {
      * Sets the agitator motor to the specified RPM. Positive RPMs should intake balls, while negative RPMs should outtake balls.
      */
     public void setAgitatorRPM() {
-        agitatorMtr.set(0.5);
+        agitatorMtr.set(0.45);
     }
 
     /** Returns the current RPM of the agitator motor. */

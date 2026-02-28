@@ -16,9 +16,9 @@ public class LightsDefaultCmd extends Command {
 
 	private final LightsSys lightsSys;
 
-	private final BooleanSupplier hasNoteSupplier;
+	BooleanSupplier hasNoteSupplier;
 
-	private boolean prevHasNote = true;
+	boolean prevHasNote = true;
 
 	/** Creates a new LightsDefaultCmd. */
 	public LightsDefaultCmd(LightsSys lightsSys, BooleanSupplier hasNoteSupplier) {
