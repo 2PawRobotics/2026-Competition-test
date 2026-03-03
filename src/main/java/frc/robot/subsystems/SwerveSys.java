@@ -119,7 +119,7 @@ public class SwerveSys extends SubsystemBase {
             VecBuilder.fill(0.35, 0.35, Units.degreesToRadians(40.0)));
 
     private final LimelightPoseEstimator[] limelightPoseEstimators = new LimelightPoseEstimator[] {
-        new LimelightPoseEstimator(VisionConstants.frontLimelightName)
+        new LimelightPoseEstimator(VisionConstants.LimelightName)
     };
 
     public void resetPPPose(Pose2d pose) {

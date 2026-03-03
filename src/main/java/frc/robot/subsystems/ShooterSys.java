@@ -1,5 +1,10 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.MutAngle;
 import edu.wpi.first.units.measure.MutAngularVelocity;
 import edu.wpi.first.units.measure.MutVoltage;
@@ -11,6 +16,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.util.limelight.LimelightHelpers;
 import frc.robot.Constants.CANDevices;
+import frc.robot.Constants.FieldConstants;
 
 import static edu.wpi.first.units.Units.Radians;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
@@ -114,37 +120,71 @@ public class ShooterSys extends SubsystemBase {
         shooterController.setSetpoint(0, ControlType.kVelocity);
     }
 
-    public double getDistanceInInches() {
-        double ty =
-        LimelightHelpers.getTY(VisionConstants.frontLimelightName);
-
-        double totalAngleDeg = 
-        VisionConstants.limelightAngle + ty;
-
-        double totalAngleRad = 
-        Math.toRadians(totalAngleDeg);
-
-        double MetersPerSecondtoInchesPerSecondConverison = 39.37;
-
-        return ((VisionConstants.tagHeight - VisionConstants.limelightHeight) / Math.tan(totalAngleRad)) + 
-        (swerveSys.getFieldRelativeVelocity().getY() * MetersPerSecondtoInchesPerSecondConverison);
+        /**
+     * Returns the planar (ground) distance from the shooter's exit point to the center
+     * of the alliance hub in feet. Uses Limelight field pose (when valid) and falls back
+     * to odometry (`swerveSys.getPose()`) otherwise.
+     *
+     * This handles the case where the robot isn't square to the hub by computing the
+     * true Euclidean distance between the shooter's position and the hub center.
+     */
+    public double getDistanceCenterHub() {
+        double meters = getPlanarDistanceToHubMeters();
+        return Units.metersToFeet(meters);
     }
 
-    public double getDistanceInFeet() {
-        return getDistanceInInches() / 12.0;
+    /**
+     * Compute the planar (XY) distance in meters between the shooter's exit point and the
+     * hub center. This uses the Limelight's field pose if available and meets the
+     * target-area threshold; otherwise it uses the drivetrain odometry pose.
+     */
+    public double getPlanarDistanceToHubMeters() {
+        // Choose hub position by alliance
+        edu.wpi.first.wpilibj.DriverStation.Alliance alliance = edu.wpi.first.wpilibj.DriverStation.getAlliance().isPresent()
+            ? edu.wpi.first.wpilibj.DriverStation.getAlliance().get()
+            : edu.wpi.first.wpilibj.DriverStation.Alliance.Blue;
+
+        Translation2d hubTranslation = (alliance == edu.wpi.first.wpilibj.DriverStation.Alliance.Red)
+            ? FieldConstants.redAllianceHubPose
+            : FieldConstants.blueAllianceHubPose;
+
+        // Prefer Limelight pose when it is reporting a visible target with sufficient area.
+        Pose2d robotPose2d;
+        boolean limelightHasTarget = LimelightHelpers.getTV(VisionConstants.LimelightName) &&
+            LimelightHelpers.getTA(VisionConstants.LimelightName) >= VisionConstants.targetAreaPercentThreshold;
+
+        if (limelightHasTarget) {
+            // Use the alliance-specific wpi pose the Limelight publishes
+            if (alliance == edu.wpi.first.wpilibj.DriverStation.Alliance.Red) {
+                robotPose2d = LimelightHelpers.getBotPose2d_wpiRed(VisionConstants.LimelightName);
+            } else {
+                robotPose2d = LimelightHelpers.getBotPose2d_wpiBlue(VisionConstants.LimelightName);
+            }
+            // If the limelight pose looks like an all-zero default, fall back to odometry
+            if (robotPose2d.getTranslation().getX() == 0.0 && robotPose2d.getTranslation().getY() == 0.0) {
+                robotPose2d = swerveSys.getPose();
+            }
+        } else {
+            robotPose2d = swerveSys.getPose();
+        }
+
+        // Apply shooter offset (robot -> shooter) using the rotation of the robot so the offset
+        // is in field coordinates.
+        Transform2d shooterOffsetTransform = new Transform2d(
+            new Translation2d(ShooterConstants.shooterOffsetXMeters, ShooterConstants.shooterOffsetYMeters),
+            new Rotation2d(0.0));
+
+        Pose2d shooterPose = robotPose2d.transformBy(shooterOffsetTransform);
+
+        double dx = shooterPose.getTranslation().getX() - hubTranslation.getX();
+        double dy = shooterPose.getTranslation().getY() - hubTranslation.getY();
+
+        return Math.hypot(dx, dy);
     }
 
     public double desiredRPM() {
-        
-        double minRPM = 2925;
-        double distance = getDistanceInFeet();
 
-        if(distance <= 4) {
-            return minRPM;
-        }
-        else {
-            return 5604.9 * (Math.pow(LimelightHelpers.getTY(VisionConstants.frontLimelightName), -0.202));
-        }
+        return 230*(getDistanceCenterHub())+1809.1; //5604.9 * (Math.pow(LimelightHelpers.getTY(VisionConstants.LimelightName), -0.202));
     }
 
     @Override

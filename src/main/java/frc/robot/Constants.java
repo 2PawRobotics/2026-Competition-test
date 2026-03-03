@@ -172,12 +172,12 @@ public class Constants {
 
         // Auto aim PID values should ideally be the same as the PathPlanner rotation ones. They are separate for safe measure.
 
-        public static final double autoAimkP = 15; //13
-        public static final double autoAimkD = 0.5; //0.5
+        public static final double autoAimkP = 50; //25
+        public static final double autoAimkD = 0; //0
 
-        public static final double autoAimToleranceDeg = 0.2;
+        public static final double autoAimToleranceDeg = 0;
 
-        public static final double autoAimTurnSpeedRadPerSec = 2.0 * Math.PI;
+        public static final double autoAimTurnSpeedRadPerSec = 10.0 * Math.PI;
         public static final double autoAumTurnAccelRadPerSecSq = 3.0 * Math.PI;
 
         public static final Pose2d driveToAmpWaypoint = new Pose2d(1.83, 7.81, Rotation2d.fromDegrees(-90.0));
@@ -214,6 +214,12 @@ public class Constants {
         public static final double shooterkP = 0;
         public static final double shooterkI = 0;
         public static final double shooterkD = 0;
+
+        // Physical offset from the robot's pose origin to the shooter/flywheel exit point.
+        // Positive X is forward, positive Y is to the left (both in meters).
+        // Set these values to your robot's shooter offset. Defaults to 0 if unknown.
+        public static final double shooterOffsetXMeters = 0.0;
+        public static final double shooterOffsetYMeters = 0.0;
 
         public static final int stallLimitAmps = 80;
         public static final int freeLimitAmps = 40;
@@ -275,8 +281,7 @@ public class Constants {
     }
 
     public class VisionConstants {
-        public static final String frontLimelightName = "limelight";
-        public static final String backLimelightName = "limelight";
+        public static final String LimelightName = "limelight";
 
         public static final double targetAreaPercentThreshold = 0.15;
 
@@ -286,7 +291,7 @@ public class Constants {
     }
 
     public class FieldConstants {
-        public static final Translation2d blueAllianceHubPose = new Translation2d(4.61, 4.02);
+        public static final Translation2d blueAllianceHubPose = new Translation2d(4.621, 4.02);
         public static final Translation2d redAllianceHubPose = new Translation2d(11.9, 4.02);
     }
 }
