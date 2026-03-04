@@ -33,6 +33,7 @@ import frc.robot.commands.functions.AutoShootCmd;
 import frc.robot.commands.functions.IntakeCmd;
 import frc.robot.commands.functions.IntakeStopCmd;
 import frc.robot.commands.functions.RunShooterFFCmd;
+import frc.robot.commands.functions.AutoAgitatorCmd;
 
 public class RobotContainer {
     
@@ -56,6 +57,7 @@ public class RobotContainer {
     AgitatorCmd agitatorCmd;
     AimToHubCmd aimToHubCmd;
     IntakeStopCmd intakeStopCmd;
+    AutoAgitatorCmd autoAgitatorCmd;
 
     //Initialize auto selector.
     SendableChooser<Command> autoSelector = new SendableChooser<Command>();
@@ -69,6 +71,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Aim", new AutoAimCmd(swerveSys));
         NamedCommands.registerCommand("Shoot", new AutoShootCmd(shooterSys));
         NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSys));
+        NamedCommands.registerCommand("Agitate", new AutoAgitatorCmd(agitatorSys));
 
         // Build an auto chooser. This will use Commands.none() as the default option.
         autoSelector = AutoBuilder.buildAutoChooser();
@@ -84,6 +87,7 @@ public class RobotContainer {
         agitatorCmd = new AgitatorCmd(agitatorSys);
         aimToHubCmd = new AimToHubCmd(swerveSys);
         intakeStopCmd = new IntakeStopCmd(intakeSys);
+        autoAgitatorCmd = new AutoAgitatorCmd(agitatorSys);
 
         //Add Requirements
     // pointCmd already requires the lightweight rotation subsystem. No need to add SwerveSys requirement.
@@ -101,7 +105,9 @@ public class RobotContainer {
     private void configOperatorBindings() {
     operatorController.b().whileTrue(new AgitatorCmd(agitatorSys));
     operatorController.leftTrigger().whileTrue(new IntakeCmd(intakeSys));
+    //operatorController.leftTrigger().whileTrue(new IntakeCmd(intakeSys, 1)); //a plus 1 should make it run forwards
     operatorController.rightTrigger().whileTrue(new RunShooterFFCmd(shooterSys));
+    //operatorController.leftBumper().whileTrue(new IntakeCmd(intakeSys, -1)); //a negative 1 should make this run backwards
     }
 
     public void configDriverBindings() {
