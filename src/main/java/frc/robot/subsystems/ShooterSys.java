@@ -184,7 +184,8 @@ public class ShooterSys extends SubsystemBase {
 
     public double desiredRPM() {
 
-        return 196.82*(getDistanceCenterHub())+1809.1; //5604.9 * (Math.pow(LimelightHelpers.getTY(VisionConstants.LimelightName), -0.202));
+        return 4575;
+
     }
 
     @Override
