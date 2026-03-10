@@ -167,5 +167,8 @@ public class RobotContainer {
         SmartDashboard.putNumber("IntakeAmps", intakeSys.getIntakeAmps());
         SmartDashboard.putNumber("IntakeTemp", intakeSys.getIntakeTemp());
 
+        SmartDashboard.putNumber("DistanceToCenterHub", shooterSys.getPlanarDistanceToHubMeters());
+        SmartDashboard.putNumber("Current Draw", RobotController.getInputCurrent());
+
     }   
 }

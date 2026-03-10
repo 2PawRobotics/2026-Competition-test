@@ -183,7 +183,7 @@ public class ShooterSys extends SubsystemBase {
 
     public double desiredRPM() {
 
-        return 3900;
+        return (225 * getDistanceCenterHub()) + 2571.9;
 
     }
 

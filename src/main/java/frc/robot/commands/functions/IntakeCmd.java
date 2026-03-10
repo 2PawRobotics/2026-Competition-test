@@ -2,6 +2,7 @@ package frc.robot.commands.functions;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSys;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.RollerConstants;
 
 public class IntakeCmd extends Command {
@@ -19,11 +20,19 @@ public class IntakeCmd extends Command {
 
     @Override
     public void execute() {
-        if(reverse == true){
-            intakeSys.setRollerRPM(-0.18);
+
+        if(RobotContainer.operatorController.leftStick().getAsBoolean() == true){
+            if(reverse == true){
+                intakeSys.setRollerRPM(-0.3);
+            }else{
+                intakeSys.setRollerRPM(0.3);
+            }
         }else{
-            intakeSys.setRollerRPM(0.18);
-        }
+            if(reverse == true){
+                intakeSys.setRollerRPM(-0.18);
+            }else{
+                intakeSys.setRollerRPM(0.18);
+        }}
     }
 
     @Override
