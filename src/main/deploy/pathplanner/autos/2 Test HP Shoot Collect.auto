@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ExtraMove"
+            "pathName": "2Start-Outpost"
           }
         },
         {
@@ -19,7 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Outpost-Hub2"
+            "pathName": "Outpost-Hub3"
           }
         },
         {
@@ -44,13 +44,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Hub-ThroughTrench"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Collect"
+            "pathName": "Hub-End"
           }
         }
       ]

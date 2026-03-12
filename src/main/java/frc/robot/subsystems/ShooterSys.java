@@ -176,7 +176,7 @@ public class ShooterSys extends SubsystemBase {
         Pose2d shooterPose = robotPose2d.transformBy(shooterOffsetTransform);
 
         double dx = (shooterPose.getTranslation().getX() - hubTranslation.getX()) + swerveSys.getFieldRelativeVelocity().getX();
-        double dy = (shooterPose.getTranslation().getY() - hubTranslation.getY()) + swerveSys.getFieldRelativeVelocity().getX();
+        double dy = (shooterPose.getTranslation().getY() - hubTranslation.getY()) + swerveSys.getFieldRelativeVelocity().getY();
 
         return Math.hypot(dx, dy);
     }

@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
+import frc.robot.Constants.CANDevices;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.VisionConstants;
@@ -62,7 +64,8 @@ public class RobotContainer {
     //Initialize auto selector.
     SendableChooser<Command> autoSelector = new SendableChooser<Command>();
 
-    //private UsbCamera camera;
+    //PDH
+    private final PowerDistribution pdh = new PowerDistribution(CANDevices.pdhId, ModuleType.kRev);
 
     public RobotContainer() {
         RobotController.setBrownoutVoltage(DriveConstants.brownoutVoltage);
@@ -77,7 +80,7 @@ public class RobotContainer {
 
         SmartDashboard.putData("auto select", autoSelector);
 
-    //Initalize Commands
+        //Initalize Commands
         pointCmd = new PointCmd(swerveRotation);
         testCmd = new AutoShootCmd(shooterSys);
         autoPointCmd = new AutoAimCmd(swerveSys);
@@ -87,9 +90,6 @@ public class RobotContainer {
         aimToHubCmd = new AimToHubCmd(swerveSys);
         intakeStopCmd = new IntakeStopCmd(intakeSys);
         autoAgitatorCmd = new AutoAgitatorCmd(agitatorSys);
-
-        //Add Requirements
-    // pointCmd already requires the lightweight rotation subsystem. No need to add SwerveSys requirement.
             
 
         new EventTrigger("Intake2").onTrue(new IntakeCmd(intakeSys, false));
@@ -163,12 +163,11 @@ public class RobotContainer {
         SmartDashboard.putNumber("Desired Shooter RPM", shooterSys.desiredRPM());
         SmartDashboard.putNumber("Limelight TY", LimelightHelpers.getTY(VisionConstants.LimelightName));
 
-        SmartDashboard.putNumberArray("Pose in Target Space", LimelightHelpers.getBotPose_TargetSpace(VisionConstants.LimelightName));
         SmartDashboard.putNumber("IntakeAmps", intakeSys.getIntakeAmps());
         SmartDashboard.putNumber("IntakeTemp", intakeSys.getIntakeTemp());
 
         SmartDashboard.putNumber("DistanceToCenterHub", shooterSys.getPlanarDistanceToHubMeters());
-        SmartDashboard.putNumber("Current Draw", RobotController.getInputCurrent());
+        SmartDashboard.putNumber("Current Draw", pdh.getTotalCurrent());
 
     }   
 }

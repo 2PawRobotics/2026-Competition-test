@@ -6,36 +6,32 @@ import frc.robot.Constants.CANDevices;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.FeedbackSensor;
-import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.spark.SparkFlex;
-import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkMax;
 import com.revrobotics.ResetMode;
 import com.revrobotics.PersistMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.config.SparkFlexConfig;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 
 public class IntakeSys extends SubsystemBase {
 
-    private final SparkFlex rollerMtr;
+    private final SparkMax rollerMtr;
     private final RelativeEncoder rollerEnc;
-    private final SparkClosedLoopController rollerController;
 
     public IntakeSys() {
         
-        rollerMtr = new SparkFlex(CANDevices.rollerMtrId, MotorType.kBrushless);
+        rollerMtr = new SparkMax(CANDevices.rollerMtrId, MotorType.kBrushless);
         rollerEnc = rollerMtr.getEncoder();
-        rollerController = rollerMtr.getClosedLoopController();
 
-        SparkFlexConfig rollerConfig = new SparkFlexConfig();
+        SparkMaxConfig rollerConfig = new SparkMaxConfig();
         rollerConfig
-            .inverted(true)
+            .inverted(false)
             .idleMode(IdleMode.kCoast)
             .smartCurrentLimit(RollerConstants.stallLimitAmps, RollerConstants.freeLimitAmps, RollerConstants.maxRPM);
         rollerConfig.encoder
-            .positionConversionFactor(1)
-            .velocityConversionFactor(1);
+            .positionConversionFactor(0.33)
+            .velocityConversionFactor(20);
         rollerConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
             .pid(RollerConstants.rollerkP, RollerConstants.rollerkI, RollerConstants.rollerkD);
@@ -64,7 +60,7 @@ public class IntakeSys extends SubsystemBase {
      * Stops the roller motor.
      */
     public void stop() {
-        rollerMtr.set(0);//rollerController.setSetpoint(0, ControlType.kVelocity);
+        rollerMtr.set(0);
     }
     
     public double getIntakeAmps() {

@@ -48,6 +48,9 @@ public class Constants {
 
         // Agitator
         public static final int agitatorMtrId = 16;
+
+        // PDH
+        public static final int pdhId = 62;
        
     }
 
