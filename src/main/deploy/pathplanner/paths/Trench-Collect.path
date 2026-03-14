@@ -3,58 +3,56 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.4809272467902993,
-        "y": 1.7642653352353794
+        "x": 3.5991440798858774,
+        "y": 0.44452211126961516
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.1011213029006182,
-        "y": 1.5549788873038528
-      },
-      "isLocked": false,
-      "linkedName": "end"
-    },
-    {
-      "anchor": {
-        "x": 1.2701854493580598,
-        "y": 1.8936519258202575
-      },
-      "prevControl": {
-        "x": 1.2545908778192645,
-        "y": 2.14316507044098
-      },
-      "nextControl": {
-        "x": 1.285780020896855,
-        "y": 1.6441387811995354
+        "x": 4.599144079885878,
+        "y": 0.44452211126961516
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.4809272467902993,
-        "y": 0.4057061340941527
+        "x": 6.173937232524963,
+        "y": 0.5739087018544944
       },
       "prevControl": {
-        "x": 1.1888213029006183,
-        "y": 0.49022835631637385
+        "x": 5.8426283880171175,
+        "y": 0.509215406562055
+      },
+      "nextControl": {
+        "x": 6.505246077032809,
+        "y": 0.6386019971469338
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.441722222222222,
+        "y": 0.858559201141228
+      },
+      "prevControl": {
+        "x": 7.001807814233633,
+        "y": 0.7162339514978601
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "End 4"
+      "linkedName": "EndCollect"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0211915233906375,
+      "rotationDegrees": 0.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "Intake",
-      "waypointRelativePos": 1.3,
-      "endWaypointRelativePos": 1.0,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
     "maxAcceleration": 3.2,
@@ -71,7 +69,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

@@ -72,8 +72,10 @@ public class RobotContainer {
 
         // Register Commands to PathPlanner
         NamedCommands.registerCommand("Aim", new AutoAimCmd(swerveSys));
-        NamedCommands.registerCommand("Shoot", new AutoShootCmd(shooterSys));
-        NamedCommands.registerCommand("Agitate", new AutoAgitatorCmd(agitatorSys));
+        NamedCommands.registerCommand("Shoot", new AutoShootCmd(shooterSys, 10));
+        NamedCommands.registerCommand("Shoot2Sec", new AutoShootCmd(shooterSys, 2.5));
+        NamedCommands.registerCommand("Agitate", new AutoAgitatorCmd(agitatorSys, 10));
+        NamedCommands.registerCommand("Agitate2Sec", new AutoAgitatorCmd(agitatorSys, 2.5));
 
         // Build an auto chooser. This will use Commands.none() as the default option.
         autoSelector = AutoBuilder.buildAutoChooser();
@@ -82,14 +84,14 @@ public class RobotContainer {
 
         //Initalize Commands
         pointCmd = new PointCmd(swerveRotation);
-        testCmd = new AutoShootCmd(shooterSys);
+        testCmd = new AutoShootCmd(shooterSys, 10);
         autoPointCmd = new AutoAimCmd(swerveSys);
         runShooterFFCmd = new RunShooterFFCmd(shooterSys);
         intakeCmd = new IntakeCmd(intakeSys, false);
         agitatorCmd = new AgitatorCmd(agitatorSys, false);
         aimToHubCmd = new AimToHubCmd(swerveSys);
         intakeStopCmd = new IntakeStopCmd(intakeSys);
-        autoAgitatorCmd = new AutoAgitatorCmd(agitatorSys);
+        autoAgitatorCmd = new AutoAgitatorCmd(agitatorSys, 10);
             
 
         new EventTrigger("Intake2").onTrue(new IntakeCmd(intakeSys, false));
@@ -168,6 +170,9 @@ public class RobotContainer {
 
         SmartDashboard.putNumber("DistanceToCenterHub", shooterSys.getPlanarDistanceToHubMeters());
         SmartDashboard.putNumber("Current Draw", pdh.getTotalCurrent());
+
+        SmartDashboard.putNumber("Speed X", swerveSys.getFieldRelativeVelocity().getX());
+        SmartDashboard.putNumber("Speed Y", swerveSys.getFieldRelativeVelocity().getY());
 
     }   
 }

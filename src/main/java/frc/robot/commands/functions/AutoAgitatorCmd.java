@@ -8,10 +8,13 @@ public class AutoAgitatorCmd extends Command {
 
     private final AgitatorSys agitatorSys;
     private final Timer timer;
-    private final double duration = 10.0; // seconds
+    private final double duration; // seconds
+    private static final double START_DELAY = 0.5; // seconds
+    private boolean started = false;
 
-    public AutoAgitatorCmd(AgitatorSys agitatorSys) {
+    public AutoAgitatorCmd(AgitatorSys agitatorSys, double duration) {
         this.agitatorSys = agitatorSys;
+        this.duration = duration;
         timer = new Timer();
     }
 
@@ -19,11 +22,16 @@ public class AutoAgitatorCmd extends Command {
     public void initialize() {
         timer.reset();
         timer.start();
+        started = false;
     }
 
     @Override
     public void execute() {
-        agitatorSys.setAgitatorRPM(false);
+        // Wait START_DELAY seconds before starting the agitator
+        if (timer.hasElapsed(START_DELAY)) {
+            agitatorSys.setAgitatorRPM(false);
+            started = true;
+        }
     }
 
     @Override
@@ -34,7 +42,8 @@ public class AutoAgitatorCmd extends Command {
     
     @Override
     public boolean isFinished() {
-        return timer.hasElapsed(duration);
+        // Finish after the initial delay plus the intended duration
+        return timer.hasElapsed(START_DELAY + duration);
     }
     
 }

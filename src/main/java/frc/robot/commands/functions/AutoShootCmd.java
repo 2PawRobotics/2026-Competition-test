@@ -10,11 +10,12 @@ import edu.wpi.first.wpilibj.Timer;
 public class AutoShootCmd extends Command {
         private final ShooterSys shooter;
         private final Timer timer;
-        private final double duration = 10.0; // seconds
+        private final double duration; // seconds
         private final SimpleMotorFeedforward ff;
 
-    public AutoShootCmd(ShooterSys shooter) {
+    public AutoShootCmd(ShooterSys shooter, double duration) {
         this.shooter = shooter;
+        this.duration = duration;
         // ff constants: ks, kv, ka. Ensure kv/ka units match rad/s (see note below)
         this.ff = new SimpleMotorFeedforward(0, 0.0175, 0);
         addRequirements(shooter);
