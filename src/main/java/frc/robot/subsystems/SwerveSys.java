@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import java.util.Optional;
+
+import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
@@ -29,6 +31,7 @@ import frc.robot.util.limelight.LimelightPoseEstimator;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.units.measure.LinearAcceleration;
 
 public class SwerveSys extends SubsystemBase {
 
@@ -105,6 +108,7 @@ public class SwerveSys extends SubsystemBase {
 
     private final Pigeon2 imu = new Pigeon2(CANDevices.imuId, "CANivore");
 
+
     // Odometry for the robot, measured in meters for linear motion and radians for rotational motion
     // Takes in kinematics and robot angle for parameters
 
@@ -115,7 +119,7 @@ public class SwerveSys extends SubsystemBase {
             getModulePositions(),
             new Pose2d(),
             VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(0.25)),
-            VecBuilder.fill(0.35, 0.35, Units.degreesToRadians(40.0)));
+            VecBuilder.fill(0.30, 0.30, Units.degreesToRadians(40.0)));
 
     private final LimelightPoseEstimator[] limelightPoseEstimators = new LimelightPoseEstimator[] {
         new LimelightPoseEstimator(VisionConstants.LimelightName)
@@ -123,6 +127,10 @@ public class SwerveSys extends SubsystemBase {
 
     public void resetPPPose(Pose2d pose) {
         setPose(pose);
+    }
+
+    public StatusSignal<LinearAcceleration> getAcceleration() {
+        return imu.getAccelerationX();
     }
 
 

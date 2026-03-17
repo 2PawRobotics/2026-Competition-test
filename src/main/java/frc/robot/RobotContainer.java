@@ -174,5 +174,7 @@ public class RobotContainer {
         SmartDashboard.putNumber("Speed X", swerveSys.getFieldRelativeVelocity().getX());
         SmartDashboard.putNumber("Speed Y", swerveSys.getFieldRelativeVelocity().getY());
 
+        //SmartDashboard.putNumber("Accel X", swerveSys.getAcceleration());
+
     }   
 }

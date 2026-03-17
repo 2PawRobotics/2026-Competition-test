@@ -7,19 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Trench-Collect"
+            "pathName": "Start-Hub"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Collect"
+            "pathName": "Hub-Outpost"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Collect-Hub"
+            "pathName": "Outpost-Hub2"
           }
         },
         {

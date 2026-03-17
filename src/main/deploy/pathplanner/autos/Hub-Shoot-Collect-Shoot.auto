@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "Start-Hub"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -26,19 +32,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Start-Hub"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
             "pathName": "Shoot-Collect"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Collect"
           }
         },
         {
