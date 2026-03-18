@@ -7,19 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "2Start-Outpost"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 3.0
+            "pathName": "Left-Trench-Collect"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Outpost-Hub3"
+            "pathName": "Left-Collect-Hub"
           }
         },
         {
@@ -39,12 +33,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Hub-Outpost"
           }
         }
       ]

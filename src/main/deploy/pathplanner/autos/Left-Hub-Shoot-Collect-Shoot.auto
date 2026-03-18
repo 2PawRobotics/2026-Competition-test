@@ -7,19 +7,38 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ExtraMove"
+            "pathName": "Start-Hub"
           }
         },
         {
-          "type": "wait",
+          "type": "parallel",
           "data": {
-            "waitTime": 3.0
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shoot2Sec"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Agitate2Sec"
+                }
+              }
+            ]
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Outpost-Hub2"
+            "pathName": "Left-Shoot-Collect"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left-Collect-Hub"
           }
         },
         {
@@ -39,18 +58,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Hub-ThroughTrench"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Collect"
           }
         }
       ]

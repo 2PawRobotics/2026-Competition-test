@@ -9,6 +9,8 @@ import edu.wpi.first.units.measure.MutAngle;
 import edu.wpi.first.units.measure.MutAngularVelocity;
 import edu.wpi.first.units.measure.MutVoltage;
 import edu.wpi.first.units.measure.Voltage;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -139,13 +141,13 @@ public class ShooterSys extends SubsystemBase {
      */
     public double getPlanarDistanceToHubMeters() {
         // Choose hub position by alliance
-        edu.wpi.first.wpilibj.DriverStation.Alliance alliance = edu.wpi.first.wpilibj.DriverStation.getAlliance().isPresent()
-            ? edu.wpi.first.wpilibj.DriverStation.getAlliance().get()
-            : edu.wpi.first.wpilibj.DriverStation.Alliance.Blue;
-
-        Translation2d hubTranslation = (alliance == edu.wpi.first.wpilibj.DriverStation.Alliance.Red)
-            ? FieldConstants.redAllianceHubPose
-            : FieldConstants.blueAllianceHubPose;
+        final Translation2d hubPose;
+        if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red) {
+            hubPose = FieldConstants.redAllianceHubPose;
+        }
+        else {
+            hubPose = FieldConstants.blueAllianceHubPose;
+        }
 
         // Prefer Limelight pose when it is reporting a visible target with sufficient area.
         Pose2d robotPose2d;
@@ -154,11 +156,8 @@ public class ShooterSys extends SubsystemBase {
 
         if (limelightHasTarget) {
             // Use the alliance-specific wpi pose the Limelight publishes
-            if (alliance == edu.wpi.first.wpilibj.DriverStation.Alliance.Red) {
-                robotPose2d = LimelightHelpers.getBotPose2d_wpiRed(VisionConstants.LimelightName);
-            } else {
-                robotPose2d = LimelightHelpers.getBotPose2d_wpiBlue(VisionConstants.LimelightName);
-            }
+            robotPose2d = LimelightHelpers.getBotPose2d_wpiBlue(VisionConstants.LimelightName);
+
             // If the limelight pose looks like an all-zero default, fall back to odometry
             if (robotPose2d.getTranslation().getX() == 0.0 && robotPose2d.getTranslation().getY() == 0.0) {
                 robotPose2d = swerveSys.getPose();
@@ -175,8 +174,8 @@ public class ShooterSys extends SubsystemBase {
 
         Pose2d shooterPose = robotPose2d.transformBy(shooterOffsetTransform);
 
-        double dx = (shooterPose.getTranslation().getX() - hubTranslation.getX()) + swerveSys.getFieldRelativeVelocity().getX();
-        double dy = (shooterPose.getTranslation().getY() - hubTranslation.getY()) + swerveSys.getFieldRelativeVelocity().getY();
+        double dx = (shooterPose.getTranslation().getX() - hubPose.getX()) + swerveSys.getFieldRelativeVelocity().getX();
+        double dy = (shooterPose.getTranslation().getY() - hubPose.getY()) + swerveSys.getFieldRelativeVelocity().getY();
 
         return Math.hypot(dx, dy);
     }
