@@ -84,14 +84,14 @@ public class RobotContainer {
 
         //Initalize Commands
         pointCmd = new PointCmd(swerveRotation);
-        testCmd = new AutoShootCmd(shooterSys, 10);
+        testCmd = new AutoShootCmd(shooterSys, 0);
         autoPointCmd = new AutoAimCmd(swerveSys);
         runShooterFFCmd = new RunShooterFFCmd(shooterSys);
         intakeCmd = new IntakeCmd(intakeSys, false);
         agitatorCmd = new AgitatorCmd(agitatorSys, false);
         aimToHubCmd = new AimToHubCmd(swerveSys);
         intakeStopCmd = new IntakeStopCmd(intakeSys);
-        autoAgitatorCmd = new AutoAgitatorCmd(agitatorSys, 10);
+        autoAgitatorCmd = new AutoAgitatorCmd(agitatorSys, 0);
             
 
         new EventTrigger("Intake2").onTrue(new IntakeCmd(intakeSys, false));
@@ -108,7 +108,8 @@ public class RobotContainer {
     operatorController.a().whileTrue(new AgitatorCmd(agitatorSys, true));
     operatorController.leftTrigger().whileTrue(new IntakeCmd(intakeSys, false));
     operatorController.leftBumper().whileTrue(new IntakeCmd(intakeSys, true));
-    operatorController.rightTrigger().whileTrue(new RunShooterFFCmd(shooterSys));
+    //operatorController.x().whileTrue(new RunShooterFFCmd(shooterSys, 3000));
+    operatorController.rightTrigger().whileTrue(new RunShooterFFCmd(shooterSys/* , shooterSys.getShooterRPM()*/));
     }
 
     public void configDriverBindings() {
