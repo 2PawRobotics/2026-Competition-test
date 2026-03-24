@@ -9,9 +9,10 @@ import frc.robot.subsystems.ShooterSys;
 public class RunShooterFFCmd extends Command {
     private final ShooterSys shooter;
     private final SimpleMotorFeedforward ff;
+    private double targetRPM;
 
     // require shooter so command has exclusive control
-    public RunShooterFFCmd(ShooterSys shooter) {
+    public RunShooterFFCmd(ShooterSys shooter, double targetRPM) {
         this.shooter = shooter;
         // ff constants: ks, kv, ka. Ensure kv/ka units match rad/s (see note below)
         this.ff = new SimpleMotorFeedforward(0, 0.0175, 0);
@@ -25,7 +26,7 @@ public class RunShooterFFCmd extends Command {
     @Override
     public void execute() {
         // convert RPM -> rad/s
-        double targetRadPerSec = shooter.desiredRPM() * 2.0 * Math.PI / 60.0;
+        double targetRadPerSec = targetRPM * 2.0 * Math.PI / 60.0;
 
         // Feedforward (volts) for target vel
         double ffVolts = ff.calculate(targetRadPerSec);

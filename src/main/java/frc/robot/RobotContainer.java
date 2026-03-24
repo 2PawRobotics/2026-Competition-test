@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
@@ -28,7 +30,7 @@ import frc.robot.subsystems.IntakeSys;
 import frc.robot.commands.drivetrain.ArcadeDriveCmd;
 import frc.robot.commands.drivetrain.LockCmd;
 import frc.robot.commands.drivetrain.PointCmd;
-import frc.robot.commands.drivetrain.AimToHubCmd;
+import frc.robot.commands.drivetrain.AimToHeadingCmd;
 import frc.robot.commands.functions.AgitatorCmd;
 import frc.robot.commands.functions.AutoAimCmd;
 import frc.robot.commands.functions.AutoShootCmd;
@@ -57,12 +59,14 @@ public class RobotContainer {
     RunShooterFFCmd runShooterFFCmd;
     IntakeCmd intakeCmd;
     AgitatorCmd agitatorCmd;
-    AimToHubCmd aimToHubCmd;
+    AimToHeadingCmd aimToHeadingCmd;
     IntakeStopCmd intakeStopCmd;
     AutoAgitatorCmd autoAgitatorCmd;
 
     //Initialize auto selector.
     SendableChooser<Command> autoSelector = new SendableChooser<Command>();
+
+    ShuffleboardTab autoTab = Shuffleboard.getTab("Auto");
 
     //PDH
     private final PowerDistribution pdh = new PowerDistribution(CANDevices.pdhId, ModuleType.kRev);
@@ -86,10 +90,10 @@ public class RobotContainer {
         pointCmd = new PointCmd(swerveRotation);
         testCmd = new AutoShootCmd(shooterSys, 0);
         autoPointCmd = new AutoAimCmd(swerveSys);
-        runShooterFFCmd = new RunShooterFFCmd(shooterSys);
+        runShooterFFCmd = new RunShooterFFCmd(shooterSys, 0);
         intakeCmd = new IntakeCmd(intakeSys, false);
         agitatorCmd = new AgitatorCmd(agitatorSys, false);
-        aimToHubCmd = new AimToHubCmd(swerveSys);
+        aimToHeadingCmd = new AimToHeadingCmd(swerveSys);
         intakeStopCmd = new IntakeStopCmd(intakeSys);
         autoAgitatorCmd = new AutoAgitatorCmd(agitatorSys, 0);
             
@@ -108,8 +112,8 @@ public class RobotContainer {
     operatorController.a().whileTrue(new AgitatorCmd(agitatorSys, true));
     operatorController.leftTrigger().whileTrue(new IntakeCmd(intakeSys, false));
     operatorController.leftBumper().whileTrue(new IntakeCmd(intakeSys, true));
-    //operatorController.x().whileTrue(new RunShooterFFCmd(shooterSys, 3000));
-    operatorController.rightTrigger().whileTrue(new RunShooterFFCmd(shooterSys/* , shooterSys.getShooterRPM()*/));
+    operatorController.x().whileTrue(new RunShooterFFCmd(shooterSys, 6500));
+    operatorController.rightTrigger().whileTrue(new RunShooterFFCmd(shooterSys, shooterSys.getShooterRPM()));
     }
 
     public void configDriverBindings() {
@@ -127,7 +131,7 @@ public class RobotContainer {
         driverController.axisGreaterThan(XboxController.Axis.kLeftTrigger.value, ControllerConstants.triggerPressedThreshhold)
            .whileTrue(new LockCmd(swerveSys));
 
-        driverController.rightTrigger().whileTrue(aimToHubCmd);
+        driverController.rightTrigger().whileTrue(new AimToHeadingCmd(swerveSys));
     }
 
     public Command getAutonomousCommand() {
@@ -176,6 +180,8 @@ public class RobotContainer {
         SmartDashboard.putNumber("Speed Y", swerveSys.getFieldRelativeVelocity().getY());
 
         //SmartDashboard.putNumber("Accel X", swerveSys.getAcceleration());
+
+
 
     }   
 }
