@@ -32,8 +32,11 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.units.measure.LinearAcceleration;
+import frc.robot.subsystems.LightsSys;
 
 public class SwerveSys extends SubsystemBase {
+
+    private final LightsSys lightsSys;
 
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
@@ -139,7 +142,11 @@ public class SwerveSys extends SubsystemBase {
      * 
      * <p>SwerveCmd contains 4 {@link SwerveModule}, a gyro, and methods to control the drive base and odometry.
      */
-    public SwerveSys() {
+
+    public SwerveSys(LightsSys lightsSys) {
+
+        this.lightsSys = lightsSys;
+
         // Resets the measured distance driven for each module
         frontLeftMod.resetDriveDistance();
         frontRightMod.resetDriveDistance();
@@ -209,6 +216,8 @@ public class SwerveSys extends SubsystemBase {
         speedFactor = 1;
       }
 
+      lightsSys.updateLEDs();
+      
     }
     
     /**
