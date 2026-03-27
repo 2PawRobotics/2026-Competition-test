@@ -16,7 +16,6 @@ public class AimToHeadingCmd extends Command {
 
     private final SwerveSys swerveSys;
 
-    //private Translation2d targetTranslation;
     private Rotation2d targetHeading;
 
     private final ProfiledPIDController aimController;
@@ -34,14 +33,7 @@ public class AimToHeadingCmd extends Command {
     }
     
     @Override
-    public void initialize() {
-        /*if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red) {
-            targetTranslation = FieldConstants.redAllianceHubPose;
-        }
-        else {
-            targetTranslation = FieldConstants.blueAllianceHubPose;
-        }*/
-    }
+    public void initialize() {}
     
     @Override
     public void execute() {
