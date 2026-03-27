@@ -208,15 +208,6 @@ public class SwerveSys extends SubsystemBase {
             }
         }
       }
-
-      if(RobotContainer.driverController.rightTrigger().getAsBoolean() == true) {
-        speedFactor = 0.1;
-      } 
-      else {
-        speedFactor = 1;
-      }
-
-      //lightsSys.updateLEDs().ignoringDisable(true);
       
     }
     
