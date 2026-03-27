@@ -26,6 +26,7 @@ import frc.robot.subsystems.SwerveRotation;
 import frc.robot.subsystems.AgitatorSys;
 import frc.robot.subsystems.ShooterSys;
 import frc.robot.subsystems.IntakeSys;
+import frc.robot.subsystems.LightsSys;
 
 import frc.robot.commands.drivetrain.ArcadeDriveCmd;
 import frc.robot.commands.drivetrain.LockCmd;
@@ -42,11 +43,12 @@ import frc.robot.commands.functions.AutoAgitatorCmd;
 public class RobotContainer {
     
     // Initialize subsystems.
-    private final SwerveSys swerveSys = new SwerveSys();
-    private final SwerveRotation swerveRotation = new SwerveRotation(swerveSys);
-    private final ShooterSys shooterSys = new ShooterSys(swerveSys);
     private final IntakeSys intakeSys = new IntakeSys();
     private final AgitatorSys agitatorSys = new AgitatorSys();
+    private final LightsSys lightsSys = new LightsSys();
+    private final SwerveSys swerveSys = new SwerveSys(lightsSys);
+    private final SwerveRotation swerveRotation = new SwerveRotation(swerveSys);
+    private final ShooterSys shooterSys = new ShooterSys(swerveSys);
 
     //Initialize joysticks.
     public final static CommandXboxController driverController = new CommandXboxController(ControllerConstants.driverGamepadPort);
@@ -80,6 +82,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Shoot2Sec", new AutoShootCmd(shooterSys, 2.5));
         NamedCommands.registerCommand("Agitate", new AutoAgitatorCmd(agitatorSys, 10));
         NamedCommands.registerCommand("Agitate2Sec", new AutoAgitatorCmd(agitatorSys, 2.5));
+        NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSys, false));
 
         // Build an auto chooser. This will use Commands.none() as the default option.
         autoSelector = AutoBuilder.buildAutoChooser();
@@ -178,10 +181,6 @@ public class RobotContainer {
 
         SmartDashboard.putNumber("Speed X", swerveSys.getFieldRelativeVelocity().getX());
         SmartDashboard.putNumber("Speed Y", swerveSys.getFieldRelativeVelocity().getY());
-
-        //SmartDashboard.putNumber("Accel X", swerveSys.getAcceleration());
-
-
 
     }   
 }
