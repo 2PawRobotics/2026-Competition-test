@@ -216,7 +216,7 @@ public class SwerveSys extends SubsystemBase {
         speedFactor = 1;
       }
 
-      lightsSys.updateLEDs();
+      //lightsSys.updateLEDs().ignoringDisable(true);
       
     }
     

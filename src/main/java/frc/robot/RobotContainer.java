@@ -82,6 +82,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Shoot2Sec", new AutoShootCmd(shooterSys, 2.5));
         NamedCommands.registerCommand("Agitate", new AutoAgitatorCmd(agitatorSys, 10));
         NamedCommands.registerCommand("Agitate2Sec", new AutoAgitatorCmd(agitatorSys, 2.5));
+        NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSys, false));
 
         // Build an auto chooser. This will use Commands.none() as the default option.
         autoSelector = AutoBuilder.buildAutoChooser();

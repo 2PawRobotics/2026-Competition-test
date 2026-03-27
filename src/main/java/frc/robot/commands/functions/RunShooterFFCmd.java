@@ -26,7 +26,7 @@ public class RunShooterFFCmd extends Command {
     @Override
     public void execute() {
         // convert RPM -> rad/s
-        double targetRadPerSec = targetRPM * 2.0 * Math.PI / 60.0;
+        double targetRadPerSec = shooter.desiredRPM() * 2.0 * Math.PI / 60.0;
 
         // Feedforward (volts) for target vel
         double ffVolts = ff.calculate(targetRadPerSec);

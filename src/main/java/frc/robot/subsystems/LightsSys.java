@@ -8,11 +8,14 @@ import java.util.Optional;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.ctre.phoenix6.controls.RainbowAnimation;
 import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.controls.SolidColor;
 import com.ctre.phoenix6.hardware.CANdle;
+import com.ctre.phoenix6.signals.AnimationDirectionValue;
 import com.ctre.phoenix6.signals.RGBWColor;
 
 /**
@@ -21,18 +24,21 @@ import com.ctre.phoenix6.signals.RGBWColor;
 public class LightsSys extends SubsystemBase {
     private final CANBus kCANBus = new CANBus("CANivore");
     private final CANdle m_candle = new CANdle(17, kCANBus);
-	//double matchTime = DriverStation.getMatchTime();
 
-    private final SolidColor[] green = new SolidColor[] {
-        new SolidColor(9, 309).withColor(new RGBWColor(0, 255, 0, 0)),
+    private final SolidColor[] Red = new SolidColor[] {
+      new SolidColor(8, 233).withColor(new RGBWColor(255, 0, 0, 0))
     };
-	private final SolidColor[] red = new SolidColor[] {
-        new SolidColor(8, 309).withColor(new RGBWColor(255, 0, 0, 0)),
+    private final SolidColor[] Blue = new SolidColor[] {
+      new SolidColor(8, 233).withColor(new RGBWColor(0, 0, 255, 0))
     };
+    private final SolidColor[] White = new SolidColor[] {
+      new SolidColor(8, 233).withColor(new RGBWColor(255, 255,255, 255))
+    };
+
 
     public LightsSys() {
         // Run the LED updater continuously so it can switch colors at runtime.
-        setDefaultCommand(updateLEDs());
+        setDefaultCommand(updateLEDs().ignoringDisable(true));
     }
 
     /**
@@ -42,17 +48,41 @@ public class LightsSys extends SubsystemBase {
      */
     public Command updateLEDs() {
         return run(() -> {
-            if (isHubActive()) {
-                for (var solidColor : green) {
+              /*if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red) {
+                for (var solidColor : underglowRed) {
+                m_candle.setControl(solidColor);
+              }
+              } else {
+                for (var solidColor : underglowbBlue) {
+                m_candle.setControl(solidColor);
+              }
+            }
+               if (isTransition()) {
+
+               } else if (isHubActive()) {
+
+               } else {
+                
+               }*/
+
+             if (isHubActive()) {
+              for (var solidColor : White) {
                     m_candle.setControl(solidColor);
                 }
-            } else {
-                for (var solidColor : red) {
+            }  
+            else {
+                if (DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red) {
+                for (var solidColor : Red) {
                     m_candle.setControl(solidColor);
+                }} else {
+                  for (var solidColor : Blue) {
+                    m_candle.setControl(solidColor);
+                }
                 }
             }
         });
     }
+
 
 	public boolean isHubActive() {
   Optional<Alliance> alliance = DriverStation.getAlliance();

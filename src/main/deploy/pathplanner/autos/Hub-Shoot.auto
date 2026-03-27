@@ -7,13 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Trench-Collect"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Collect-Hub"
+            "pathName": "Set-Odometry-Path"
           }
         },
         {
@@ -31,14 +25,14 @@
                 "data": {
                   "name": "Agitate"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "New Path"
           }
         }
       ]
