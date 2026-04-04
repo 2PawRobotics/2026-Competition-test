@@ -60,7 +60,7 @@ public class IntakeSys extends SubsystemBase {
      * Stops the roller motor.
      */
     public void stop() {
-        rollerMtr.set(0);
+        rollerMtr.stopMotor();
     }
     
     public double getIntakeAmps() {

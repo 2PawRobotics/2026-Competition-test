@@ -26,6 +26,7 @@ import frc.robot.util.limelight.LimelightHelpers;
 import frc.robot.subsystems.SwerveRotation;
 import frc.robot.subsystems.AgitatorSys;
 import frc.robot.subsystems.ShooterSys;
+import frc.robot.subsystems.SwerveModule;
 import frc.robot.subsystems.IntakeSys;
 import frc.robot.subsystems.LightsSys;
 
