@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.2368616262482157,
-        "y": 2.0618544935805994
+        "x": 3.7285306704707555,
+        "y": 0.7809272467902997
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8136091298145505,
-        "y": -0.16359486447931415
+        "x": 2.30527817403709,
+        "y": -1.4445221112696138
       },
       "isLocked": false,
       "linkedName": "Hub-End"
@@ -53,7 +53,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 55.007979801441266
+    "rotation": 75.17352002964434
   },
   "useDefaultConstraints": true
 }

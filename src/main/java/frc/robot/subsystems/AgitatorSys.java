@@ -52,11 +52,11 @@ public class AgitatorSys extends SubsystemBase {
      */
     public void setAgitatorRPM(boolean reverse) {
         if(reverse == true) {
-            agitatorMtr.set(-0.65);
-            feederMtr.set(-0.35);
+            agitatorMtr.set(-0.75);
+            feederMtr.set(-0.40);
         }else{
-            agitatorMtr.set(0.65);
-            feederMtr.set(0.35);
+            agitatorMtr.set(0.75);
+            feederMtr.set(0.40);
         }
     }
 

@@ -200,14 +200,14 @@ public class SwerveSys extends SubsystemBase {
         // Updates the odometry every 20ms
         poseEstimator.update(imu.getRotation2d(), getModulePositions());
 
-        if(DriverStation.isTeleop()){
+        //if(DriverStation.isTeleop()){
             for(LimelightPoseEstimator limelightPoseEstimator : limelightPoseEstimators) {
             Optional<Pose2d> limelightPose = limelightPoseEstimator.getRobotPose();
             if(limelightPose.isPresent()) {
                 poseEstimator.addVisionMeasurement(limelightPose.get(), limelightPoseEstimator.getCaptureTimestamp());
             }
         }
-      }
+      //}
       
     }
     

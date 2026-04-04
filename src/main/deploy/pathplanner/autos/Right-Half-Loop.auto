@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Trench-Collect"
+            "pathName": "Copy of Trench-Collect"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Collect-Hub"
+            "pathName": "Copy of Copy of Collect-Hub"
           }
         },
         {
@@ -33,12 +33,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "New Path"
           }
         }
       ]
