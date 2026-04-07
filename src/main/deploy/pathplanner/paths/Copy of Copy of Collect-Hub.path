@@ -3,45 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.7265763195435095,
-        "y": 3.2780884450784593
+        "x": 5.9927960057061345,
+        "y": 1.7513266761768898
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.80793152639087,
-        "y": 2.1394864479315263
+        "x": 6.173937232524963,
+        "y": 0.5480313837375184
       },
       "isLocked": false,
       "linkedName": "EndCollect"
     },
     {
       "anchor": {
-        "x": 5.876348074179743,
-        "y": 0.7809272467902997
+        "x": 5.125905848787446,
+        "y": 0.71623395149786
       },
       "prevControl": {
-        "x": 6.15583969737526,
-        "y": 0.9672549955873089
+        "x": 5.46231098430813,
+        "y": 0.7421112696148361
       },
       "nextControl": {
-        "x": 5.668335500595282,
-        "y": 0.6422521977339934
+        "x": 4.8766422274120504,
+        "y": 0.6970598267766754
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.7285306704707555,
-        "y": 0.7809272467902997
+        "x": 3.198045649072753,
+        "y": 1.0785164051355207
       },
       "prevControl": {
-        "x": 4.543666191155491,
-        "y": 0.6127246790299581
+        "x": 3.573266761768901,
+        "y": 0.5092154065620534
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Hub-End"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
@@ -63,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 75.17352002964434
+    "rotation": 61.26020470831198
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }
