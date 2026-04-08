@@ -80,9 +80,9 @@ public class RobotContainer {
 
         // Register Commands to PathPlanner
         NamedCommands.registerCommand("Aim", new AutoAimCmd(swerveSys));
-        NamedCommands.registerCommand("Shoot", new AutoShootCmd(shooterSys, 10));
+        NamedCommands.registerCommand("Shoot", new AutoShootCmd(shooterSys, 7));
         NamedCommands.registerCommand("Shoot2Sec", new AutoShootCmd(shooterSys, 2.5));
-        NamedCommands.registerCommand("Agitate", new AutoAgitatorCmd(agitatorSys, 10));
+        NamedCommands.registerCommand("Agitate", new AutoAgitatorCmd(agitatorSys, 7));
         NamedCommands.registerCommand("Agitate2Sec", new AutoAgitatorCmd(agitatorSys, 2.5));
         NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSys, false));
 
