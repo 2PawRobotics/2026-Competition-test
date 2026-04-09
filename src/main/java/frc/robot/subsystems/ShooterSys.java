@@ -185,7 +185,7 @@ public class ShooterSys extends SubsystemBase {
 
     public double desiredRPM() {
 
-        return (306 * getDistanceCenterHub()) + 1936;
+        return (306 * getDistanceCenterHub()) + 1736;
 
     }
 
@@ -211,5 +211,8 @@ public class ShooterSys extends SubsystemBase {
     return m_sysIdRoutine.dynamic(direction);
   }
 
+  public double shooterAmps() {
+    return shooterMtr.getOutputCurrent();
+  }
     
 }

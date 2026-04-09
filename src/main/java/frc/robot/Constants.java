@@ -179,8 +179,8 @@ public class Constants {
 
         // Auto aim PID values should ideally be the same as the PathPlanner rotation ones. They are separate for safe measure.
 
-        public static final double autoAimkP = 50; //25
-        public static final double autoAimkD = 0; //0
+        public static final double autoAimkP = 20; //25
+        public static final double autoAimkD = 0.9; //0
 
         public static final double autoAimToleranceDeg = 0;
 
@@ -228,8 +228,8 @@ public class Constants {
         public static final double shooterOffsetXMeters = 0.0;
         public static final double shooterOffsetYMeters = 0.0;
 
-        public static final int stallLimitAmps = 80;
-        public static final int freeLimitAmps = 40;
+        public static final int stallLimitAmps = 100;
+        public static final int freeLimitAmps = 60;
         public static final int maxRPM = 6784;
 
     }
