@@ -41,6 +41,7 @@ import frc.robot.commands.functions.IntakeCmd;
 import frc.robot.commands.functions.IntakeStopCmd;
 import frc.robot.commands.functions.RunShooterFFCmd;
 import frc.robot.commands.functions.AutoAgitatorCmd;
+import frc.robot.commands.drivetrain.AutoAimHubCmd;
 
 public class RobotContainer {
     
@@ -67,6 +68,7 @@ public class RobotContainer {
     AimToHubCmd aimToHubCmd;
     IntakeStopCmd intakeStopCmd;
     AutoAgitatorCmd autoAgitatorCmd;
+    AutoAimHubCmd autoAimHubCmd;
 
     //Initialize auto selector.
     SendableChooser<Command> autoSelector = new SendableChooser<Command>();
@@ -80,9 +82,9 @@ public class RobotContainer {
         RobotController.setBrownoutVoltage(DriveConstants.brownoutVoltage);
 
         // Register Commands to PathPlanner
-        NamedCommands.registerCommand("Aim", new AutoAimCmd(swerveSys));
+        NamedCommands.registerCommand("Aim", new AimToHubCmd(swerveSys));
         NamedCommands.registerCommand("Shoot", new AutoShootCmd(shooterSys, 7));
-        NamedCommands.registerCommand("Shoot2Sec", new AutoShootCmd(shooterSys, 2.5));
+        NamedCommands.registerCommand("Shoot1Sec", new AutoShootCmd(shooterSys, 1));
         NamedCommands.registerCommand("Agitate", new AutoAgitatorCmd(agitatorSys, 7));
         NamedCommands.registerCommand("Agitate2Sec", new AutoAgitatorCmd(agitatorSys, 2.5));
         NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSys, false));
@@ -102,6 +104,7 @@ public class RobotContainer {
         aimToHubCmd = new AimToHubCmd(swerveSys);
         intakeStopCmd = new IntakeStopCmd(intakeSys);
         autoAgitatorCmd = new AutoAgitatorCmd(agitatorSys, 0);
+        autoAimHubCmd = new AutoAimHubCmd(swerveSys, 0.5);
             
 
         new EventTrigger("Intake2").onTrue(new IntakeCmd(intakeSys, false));

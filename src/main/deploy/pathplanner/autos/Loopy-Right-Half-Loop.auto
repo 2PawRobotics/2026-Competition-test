@@ -11,12 +11,6 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "Copy of Copy of Collect-Hub"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -38,7 +32,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Shoot-Nuetral"
+            "pathName": "New Path"
           }
         }
       ]

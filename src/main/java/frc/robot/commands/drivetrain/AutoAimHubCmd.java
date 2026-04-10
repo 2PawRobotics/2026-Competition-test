@@ -11,13 +11,14 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.subsystems.SwerveSys;
 
-public class AimToHubCmd extends Command {
+public class AutoAimHubCmd extends Command {
 
     private final SwerveSys swerveSys;
 
@@ -25,9 +26,14 @@ public class AimToHubCmd extends Command {
 
     private final ProfiledPIDController aimController;
 
+    private final Timer timer;
+    private final double duration = 0.5; // seconds
 
-    public AimToHubCmd(SwerveSys swerveSys) {
+
+    public AutoAimHubCmd(SwerveSys swerveSys, double duration) {
         this.swerveSys = swerveSys;
+
+        timer = new Timer();
 
         aimController = new ProfiledPIDController(
             AutoConstants.autoAimkP, 0.0, AutoConstants.autoAimkD,
@@ -46,6 +52,8 @@ public class AimToHubCmd extends Command {
         else {
             targetTranslation = FieldConstants.blueAllianceHubPose;
         }
+        timer.reset();
+        timer.start();
     }
     
     @Override
@@ -70,6 +78,7 @@ public class AimToHubCmd extends Command {
         else {
             swerveSys.setOmegaOverrideRadPerSec(Optional.of(0.0));
         }
+        
 	}
 
     @Override
@@ -78,11 +87,12 @@ public class AimToHubCmd extends Command {
         // Provide a DoubleSupplier; use NaN to indicate "no override" (PPHolonomicDriveController
         // implementations commonly check for NaN to disable an override).
         PPHolonomicDriveController.overrideRotationFeedback(() -> Double.NaN);
+        timer.stop();
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return timer.hasElapsed(duration);
     }
 
 }
