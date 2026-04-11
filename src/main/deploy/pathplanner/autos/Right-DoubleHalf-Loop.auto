@@ -1,0 +1,44 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right-Trench-Double-Collect"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Right-DoubleCollect-Hub"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shoot14Sec"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Agitate14Sec"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
