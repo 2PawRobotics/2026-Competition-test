@@ -48,6 +48,7 @@ public class Constants {
 
         // Agitator
         public static final int agitatorMtrId = 16;
+        public static final int feederMtr = 18;
 
         // CANdle
         public static final int candleId = 17;
@@ -147,14 +148,14 @@ public class Constants {
         public static final double brownoutVoltage = 6.25;
         
         // These values should be fine, but if the modules start to rattle you may want to play with the steer PID values.
-        public static final double drivekP = 0.13;//0.005;
+        public static final double drivekP = 0.005;//0.005;
         public static final double drivekD = 0.0;
 
         public static final double steerkP = 0.37431;
         public static final double steerkD = 0.27186;
 
-        public static final double ksVolts = 0.667;
-        public static final double kvVoltSecsPerMeter = 2.44;
+        public static final double ksVolts = 0.1; //0.667
+        public static final double kvVoltSecsPerMeter =  2.44; //2.44
         public static final double kaVoltSecsPerMeterSq = 0.0;
 
         public static final SimpleMotorFeedforward driveFF =
@@ -178,8 +179,8 @@ public class Constants {
 
         // Auto aim PID values should ideally be the same as the PathPlanner rotation ones. They are separate for safe measure.
 
-        public static final double autoAimkP = 50; //25
-        public static final double autoAimkD = 0; //0
+        public static final double autoAimkP = 20; //25
+        public static final double autoAimkD = 0.9; //0
 
         public static final double autoAimToleranceDeg = 0;
 
@@ -227,8 +228,8 @@ public class Constants {
         public static final double shooterOffsetXMeters = 0.0;
         public static final double shooterOffsetYMeters = 0.0;
 
-        public static final int stallLimitAmps = 80;
-        public static final int freeLimitAmps = 40;
+        public static final int stallLimitAmps = 100;
+        public static final int freeLimitAmps = 60;
         public static final int maxRPM = 6784;
 
     }

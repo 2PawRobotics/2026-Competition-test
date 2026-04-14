@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import frc.robot.Constants.CANDevices;
@@ -25,13 +26,14 @@ import frc.robot.util.limelight.LimelightHelpers;
 import frc.robot.subsystems.SwerveRotation;
 import frc.robot.subsystems.AgitatorSys;
 import frc.robot.subsystems.ShooterSys;
+import frc.robot.subsystems.SwerveModule;
 import frc.robot.subsystems.IntakeSys;
 import frc.robot.subsystems.LightsSys;
 
 import frc.robot.commands.drivetrain.ArcadeDriveCmd;
 import frc.robot.commands.drivetrain.LockCmd;
 import frc.robot.commands.drivetrain.PointCmd;
-import frc.robot.commands.drivetrain.AimToHeadingCmd;
+import frc.robot.commands.drivetrain.AimToHubCmd;
 import frc.robot.commands.functions.AgitatorCmd;
 import frc.robot.commands.functions.AutoAimCmd;
 import frc.robot.commands.functions.AutoShootCmd;
@@ -39,16 +41,18 @@ import frc.robot.commands.functions.IntakeCmd;
 import frc.robot.commands.functions.IntakeStopCmd;
 import frc.robot.commands.functions.RunShooterFFCmd;
 import frc.robot.commands.functions.AutoAgitatorCmd;
+import frc.robot.commands.drivetrain.AutoAimHubCmd;
 
 public class RobotContainer {
     
     // Initialize subsystems.
-    private final IntakeSys intakeSys = new IntakeSys();
-    private final AgitatorSys agitatorSys = new AgitatorSys();
     private final LightsSys lightsSys = new LightsSys();
     private final SwerveSys swerveSys = new SwerveSys(lightsSys);
-    private final SwerveRotation swerveRotation = new SwerveRotation(swerveSys);
+    private final IntakeSys intakeSys = new IntakeSys();
     private final ShooterSys shooterSys = new ShooterSys(swerveSys);
+    private final AgitatorSys agitatorSys = new AgitatorSys(shooterSys);    
+    private final SwerveRotation swerveRotation = new SwerveRotation(swerveSys);
+    
 
     //Initialize joysticks.
     public final static CommandXboxController driverController = new CommandXboxController(ControllerConstants.driverGamepadPort);
@@ -61,9 +65,10 @@ public class RobotContainer {
     RunShooterFFCmd runShooterFFCmd;
     IntakeCmd intakeCmd;
     AgitatorCmd agitatorCmd;
-    AimToHeadingCmd aimToHeadingCmd;
+    AimToHubCmd aimToHubCmd;
     IntakeStopCmd intakeStopCmd;
     AutoAgitatorCmd autoAgitatorCmd;
+    AutoAimHubCmd autoAimHubCmd;
 
     //Initialize auto selector.
     SendableChooser<Command> autoSelector = new SendableChooser<Command>();
@@ -77,10 +82,12 @@ public class RobotContainer {
         RobotController.setBrownoutVoltage(DriveConstants.brownoutVoltage);
 
         // Register Commands to PathPlanner
-        NamedCommands.registerCommand("Aim", new AutoAimCmd(swerveSys));
-        NamedCommands.registerCommand("Shoot", new AutoShootCmd(shooterSys, 10));
-        NamedCommands.registerCommand("Shoot2Sec", new AutoShootCmd(shooterSys, 2.5));
-        NamedCommands.registerCommand("Agitate", new AutoAgitatorCmd(agitatorSys, 10));
+        NamedCommands.registerCommand("Aim", new AimToHubCmd(swerveSys));
+        NamedCommands.registerCommand("Shoot", new AutoShootCmd(shooterSys, 7));
+        NamedCommands.registerCommand("Shoot14Sec", new AutoShootCmd(shooterSys, 14));
+        NamedCommands.registerCommand("Shoot1Sec", new AutoShootCmd(shooterSys, 1));
+        NamedCommands.registerCommand("Agitate", new AutoAgitatorCmd(agitatorSys, 7));
+        NamedCommands.registerCommand("Agitate14Sec", new AutoAgitatorCmd(agitatorSys, 14));
         NamedCommands.registerCommand("Agitate2Sec", new AutoAgitatorCmd(agitatorSys, 2.5));
         NamedCommands.registerCommand("Intake", new IntakeCmd(intakeSys, false));
 
@@ -96,9 +103,10 @@ public class RobotContainer {
         runShooterFFCmd = new RunShooterFFCmd(shooterSys, 0);
         intakeCmd = new IntakeCmd(intakeSys, false);
         agitatorCmd = new AgitatorCmd(agitatorSys, false);
-        aimToHeadingCmd = new AimToHeadingCmd(swerveSys);
+        aimToHubCmd = new AimToHubCmd(swerveSys);
         intakeStopCmd = new IntakeStopCmd(intakeSys);
         autoAgitatorCmd = new AutoAgitatorCmd(agitatorSys, 0);
+        autoAimHubCmd = new AutoAimHubCmd(swerveSys, 0.5);
             
 
         new EventTrigger("Intake2").onTrue(new IntakeCmd(intakeSys, false));
@@ -115,7 +123,7 @@ public class RobotContainer {
     operatorController.a().whileTrue(new AgitatorCmd(agitatorSys, true));
     operatorController.leftTrigger().whileTrue(new IntakeCmd(intakeSys, false));
     operatorController.leftBumper().whileTrue(new IntakeCmd(intakeSys, true));
-    operatorController.x().whileTrue(new RunShooterFFCmd(shooterSys, 6500));
+    operatorController.x().whileTrue(new RunShooterFFCmd(shooterSys, 5375));
     operatorController.rightTrigger().whileTrue(new RunShooterFFCmd(shooterSys, shooterSys.getShooterRPM()));
     }
 
@@ -134,7 +142,7 @@ public class RobotContainer {
         driverController.axisGreaterThan(XboxController.Axis.kLeftTrigger.value, ControllerConstants.triggerPressedThreshhold)
            .whileTrue(new LockCmd(swerveSys));
 
-        driverController.rightTrigger().whileTrue(new AimToHeadingCmd(swerveSys));
+        driverController.rightTrigger().whileTrue(new AimToHubCmd(swerveSys));
     }
 
     public Command getAutonomousCommand() {
@@ -176,11 +184,15 @@ public class RobotContainer {
         SmartDashboard.putNumber("IntakeAmps", intakeSys.getIntakeAmps());
         SmartDashboard.putNumber("IntakeTemp", intakeSys.getIntakeTemp());
 
+        SmartDashboard.putNumber("shooterAmps", shooterSys.shooterAmps());
+
         SmartDashboard.putNumber("DistanceToCenterHub", shooterSys.getPlanarDistanceToHubMeters());
         SmartDashboard.putNumber("Current Draw", pdh.getTotalCurrent());
 
         SmartDashboard.putNumber("Speed X", swerveSys.getFieldRelativeVelocity().getX());
         SmartDashboard.putNumber("Speed Y", swerveSys.getFieldRelativeVelocity().getY());
+
+        SmartDashboard.putNumber("Match Time", DriverStation.getMatchTime());
 
     }   
 }

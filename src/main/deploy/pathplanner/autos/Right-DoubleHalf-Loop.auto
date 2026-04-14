@@ -7,25 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Start-Hub"
+            "pathName": "Right-Trench-Double-Collect"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Hub-Outpost"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 3.0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Outpost-Hub2"
+            "pathName": "Right-DoubleCollect-Hub"
           }
         },
         {
@@ -45,6 +33,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightEndNuetral"
           }
         }
       ]

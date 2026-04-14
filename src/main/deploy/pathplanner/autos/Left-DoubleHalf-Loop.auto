@@ -7,38 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Start-Hub"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "Shoot2Sec"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "Agitate2Sec"
-                }
-              }
-            ]
+            "pathName": "Left-Trench-Double-Collect"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Shoot-Collect"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Collect-Hub"
+            "pathName": "Left-Collect-Hub"
           }
         },
         {
@@ -58,6 +33,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left-Hub-Nuteral"
           }
         }
       ]

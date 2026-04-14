@@ -12,12 +12,14 @@ import com.revrobotics.PersistMode;
 import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.FeedForwardConfig;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.FeedbackSensor;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
@@ -62,6 +64,11 @@ public class SwerveModule extends SubsystemBase {
         steerController = steerMtr.getClosedLoopController();
         driveController = driveMtr.getClosedLoopController();
 
+        FeedForwardConfig driveFFConfig = new FeedForwardConfig();
+        driveFFConfig.kS(DriveConstants.ksVolts);
+        driveFFConfig.kV(DriveConstants.kvVoltSecsPerMeter);
+        driveFFConfig.kA(DriveConstants.kaVoltSecsPerMeterSq);
+
         SparkFlexConfig driveConfig = new SparkFlexConfig();
         driveConfig 
             .inverted(false)
@@ -71,7 +78,8 @@ public class SwerveModule extends SubsystemBase {
             .velocityConversionFactor(DriveConstants.driveMetersPerSecPerMtrRPM);
         driveConfig.closedLoop
             .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-            .pid(DriveConstants.drivekP, 0, DriveConstants.drivekD);
+            .pid(DriveConstants.drivekP, 0, DriveConstants.drivekD)
+            .apply(driveFFConfig);
 
 
         SparkFlexConfig steerConfig = new SparkFlexConfig();
@@ -209,8 +217,9 @@ public class SwerveModule extends SubsystemBase {
             driveMtr.set(desiredState.speedMetersPerSecond / DriveConstants.freeMetersPerSecond);
         }
         else {
-            driveController.setSetpoint(0.0,ControlType.kPosition);
+            driveController.setSetpoint(desiredState.speedMetersPerSecond, ControlType.kVelocity);
         }
+        SmartDashboard.putNumber("Desired Speed", desiredState.speedMetersPerSecond);
     }
 
     public void runCharacterization(double volts) {

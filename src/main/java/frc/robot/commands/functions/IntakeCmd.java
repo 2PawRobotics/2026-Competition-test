@@ -22,15 +22,15 @@ public class IntakeCmd extends Command {
 
         if(RobotContainer.operatorController.leftStick().getAsBoolean() == true){
             if(reverse == true){
-                intakeSys.setRollerRPM(-0.8);
+                intakeSys.setRollerRPM(-0.9);
             }else{
-                intakeSys.setRollerRPM(0.8);
+                intakeSys.setRollerRPM(0.9);
             }
         }else{
             if(reverse == true){
-                intakeSys.setRollerRPM(-0.5);
+                intakeSys.setRollerRPM(-0.9);
             }else{
-                intakeSys.setRollerRPM(0.5);
+                intakeSys.setRollerRPM(0.9);
         }}
     }
 

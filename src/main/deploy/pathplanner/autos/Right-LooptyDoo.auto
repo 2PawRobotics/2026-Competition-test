@@ -7,13 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Left-Trench-Collect"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Left-OneHalf-Collect-Hub"
+            "pathName": "Right-LootyDoo"
           }
         },
         {
@@ -33,6 +27,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightEndNuetral"
           }
         }
       ]

@@ -3,51 +3,51 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.53548888888889,
-        "y": 6.0521
+        "x": 3.1346777777777777,
+        "y": 5.993633333333333
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.496672911713426,
-        "y": 7.022499429386591
+        "x": 3.173655555555556,
+        "y": 7.231177777777777
       },
       "isLocked": false,
-      "linkedName": "Left-Collect-End"
+      "linkedName": "Left-Hub-End"
     },
     {
       "anchor": {
-        "x": 4.615833333333334,
-        "y": 7.484533333333332
+        "x": 4.674300000000001,
+        "y": 7.348111111111112
       },
       "prevControl": {
-        "x": 5.513256815301324,
-        "y": 7.469294802274435
+        "x": 3.6842768909002146,
+        "y": 7.368212436201649
       },
       "nextControl": {
-        "x": 3.4249023141543837,
-        "y": 7.50475571405928
+        "x": 5.830419951656365,
+        "y": 7.324637373197022
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.1346777777777777,
-        "y": 5.993633333333333
+        "x": 6.225691868758916,
+        "y": 5.529415121255349
       },
       "prevControl": {
-        "x": 3.241866666666667,
-        "y": 7.211688888888889
+        "x": 6.311366666666668,
+        "y": 7.708655555555556
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Left-Hub-End"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.11907131011609,
-      "rotationDegrees": 0.0
+      "waypointRelativePos": 0.8643449419568839,
+      "rotationDegrees": 180.0
     }
   ],
   "constraintZones": [],
@@ -63,13 +63,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -52.90273934316542
+    "rotation": 90.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
-    "velocity": 1.5,
-    "rotation": -88.99491399474589
+    "velocity": 0,
+    "rotation": -52.90273934316542
   },
   "useDefaultConstraints": true
 }

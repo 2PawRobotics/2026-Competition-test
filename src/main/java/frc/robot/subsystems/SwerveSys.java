@@ -200,14 +200,14 @@ public class SwerveSys extends SubsystemBase {
         // Updates the odometry every 20ms
         poseEstimator.update(imu.getRotation2d(), getModulePositions());
 
-        if(DriverStation.isTeleop()){
+        //if(DriverStation.isTeleop()){
             for(LimelightPoseEstimator limelightPoseEstimator : limelightPoseEstimators) {
             Optional<Pose2d> limelightPose = limelightPoseEstimator.getRobotPose();
             if(limelightPose.isPresent()) {
                 poseEstimator.addVisionMeasurement(limelightPose.get(), limelightPoseEstimator.getCaptureTimestamp());
             }
         }
-      }
+      //}
       
     }
     
@@ -299,10 +299,17 @@ public class SwerveSys extends SubsystemBase {
      * @param moduleStates An aray module states to set. The order is FL, FR, BL, BR.
      */
     public void setModuleStates(SwerveModuleState[] moduleStates) {
+        if(!DriverStation.isTeleop()) {
+        frontLeftMod.setDesiredState(moduleStates[0], true);
+        frontRightMod.setDesiredState(moduleStates[1], true);
+        backLeftMod.setDesiredState(moduleStates[2], true);
+        backRightMod.setDesiredState(moduleStates[3], true);
+    } else {
         frontLeftMod.setDesiredState(moduleStates[0], false);
         frontRightMod.setDesiredState(moduleStates[1], false);
         backLeftMod.setDesiredState(moduleStates[2], false);
         backRightMod.setDesiredState(moduleStates[3], false);
+    }
     }
 
     /**
