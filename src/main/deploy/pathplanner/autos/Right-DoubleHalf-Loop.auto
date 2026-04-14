@@ -23,16 +23,22 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "Shoot14Sec"
+                  "name": "Shoot"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Agitate14Sec"
+                  "name": "Agitate"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightEndNuetral"
           }
         }
       ]

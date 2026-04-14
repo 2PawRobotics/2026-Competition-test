@@ -3,16 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.379186875891583,
-        "y": 7.224379457917262
+        "x": 3.1346777777777777,
+        "y": 5.993633333333333
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.379186875891583,
-        "y": 7.224379457917262
+        "x": 3.173655555555556,
+        "y": 7.231177777777777
       },
       "isLocked": false,
       "linkedName": "Left-Hub-End"
+    },
+    {
+      "anchor": {
+        "x": 4.674300000000001,
+        "y": 7.348111111111112
+      },
+      "prevControl": {
+        "x": 3.6842768909002146,
+        "y": 7.368212436201649
+      },
+      "nextControl": {
+        "x": 5.830419951656365,
+        "y": 7.324637373197022
+      },
+      "isLocked": false,
+      "linkedName": null
     },
     {
       "anchor": {
@@ -20,8 +36,8 @@
         "y": 5.529415121255349
       },
       "prevControl": {
-        "x": 6.212753209700429,
-        "y": 8.000699001426533
+        "x": 6.311366666666668,
+        "y": 7.708655555555556
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +46,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.25629748100759686,
+      "waypointRelativePos": 0.8643449419568839,
       "rotationDegrees": 180.0
     }
   ],
@@ -53,7 +69,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -68.96248897457824
+    "rotation": -52.90273934316542
   },
   "useDefaultConstraints": true
 }
