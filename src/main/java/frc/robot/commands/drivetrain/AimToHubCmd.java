@@ -21,8 +21,6 @@ public class AimToHubCmd extends Command {
 
     private final SwerveSys swerveSys;
 
-    private Translation2d targetTranslation;
-
     private final ProfiledPIDController aimController;
 
 
@@ -40,31 +38,18 @@ public class AimToHubCmd extends Command {
     
     @Override
     public void initialize() {
-        if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red) {
-            targetTranslation = FieldConstants.redAllianceHubPose;
-        }
-        else {
-            targetTranslation = FieldConstants.blueAllianceHubPose;
-        }
+
     }
     
     @Override
     public void execute() {
-		Translation2d extrapolation = new Translation2d(
-            swerveSys.getFieldRelativeVelocity().getX(),
-            swerveSys.getFieldRelativeVelocity().getY());
-    
-        Translation2d extrapolatedTranslation = swerveSys.getPose().getTranslation().plus(extrapolation);
-        Translation2d extrapolatedTargetOffset = targetTranslation.minus(extrapolatedTranslation);
-
-        final Rotation2d targetHeading = Rotation2d.fromRadians(MathUtil.angleModulus(extrapolatedTargetOffset.getAngle().getRadians()));
         
-        SmartDashboard.putNumber("target heading deg", targetHeading.getDegrees());
 
-        PPHolonomicDriveController.overrideRotationFeedback(() -> targetHeading.getRadians());
 
-        if(Math.abs(swerveSys.getHeading().getDegrees() - targetHeading.getDegrees()) > AutoConstants.autoAimToleranceDeg) {
-            double aimRadPerSec = aimController.calculate(swerveSys.getHeading().getRadians(), targetHeading.getRadians());
+        PPHolonomicDriveController.overrideRotationFeedback(() -> swerveSys.targetHeading.getRadians());
+
+        if(Math.abs(swerveSys.getHeading().getDegrees() - swerveSys.targetHeading.getDegrees()) > AutoConstants.autoAimToleranceDeg) {
+            double aimRadPerSec = aimController.calculate(swerveSys.getHeading().getRadians(), swerveSys.targetHeading.getRadians());
             swerveSys.setOmegaOverrideRadPerSec(Optional.of(aimRadPerSec));
         }
         else {

@@ -23,9 +23,11 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.CANDevices;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.util.limelight.LimelightPoseEstimator;
 import edu.wpi.first.networktables.NetworkTable;
@@ -194,21 +196,42 @@ public class SwerveSys extends SubsystemBase {
     );
     }
 
+    
+    public Translation2d targetTranslation;
+    public Translation2d extrapolatedTargetOffset;
+    public Translation2d extrapolation;
+    public Rotation2d targetHeading;
     // This method will be called once per scheduler run
     @Override
     public void periodic() {
         // Updates the odometry every 20ms
         poseEstimator.update(imu.getRotation2d(), getModulePositions());
 
-        //if(DriverStation.isTeleop()){
             for(LimelightPoseEstimator limelightPoseEstimator : limelightPoseEstimators) {
             Optional<Pose2d> limelightPose = limelightPoseEstimator.getRobotPose();
             if(limelightPose.isPresent()) {
                 poseEstimator.addVisionMeasurement(limelightPose.get(), limelightPoseEstimator.getCaptureTimestamp());
             }
+
+        
         }
-      //}
-      
+        if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red) {
+            targetTranslation = FieldConstants.redAllianceHubPose;
+        }
+        else {
+            targetTranslation = FieldConstants.blueAllianceHubPose;
+        }
+
+        Translation2d extrapolation = new Translation2d(
+            getFieldRelativeVelocity().getX(),
+            getFieldRelativeVelocity().getY());
+    
+        Translation2d extrapolatedTranslation = getPose().getTranslation().plus(extrapolation);
+        Translation2d extrapolatedTargetOffset = targetTranslation.minus(extrapolatedTranslation);
+
+        targetHeading = Rotation2d.fromRadians(MathUtil.angleModulus(extrapolatedTargetOffset.getAngle().getRadians()));
+
+        SmartDashboard.putNumber("target heading deg", targetHeading.getDegrees());
     }
     
     /**
