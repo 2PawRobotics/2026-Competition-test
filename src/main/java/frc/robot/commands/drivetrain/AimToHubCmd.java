@@ -43,8 +43,6 @@ public class AimToHubCmd extends Command {
     
     @Override
     public void execute() {
-        
-
 
         PPHolonomicDriveController.overrideRotationFeedback(() -> swerveSys.targetHeading.getRadians());
 
