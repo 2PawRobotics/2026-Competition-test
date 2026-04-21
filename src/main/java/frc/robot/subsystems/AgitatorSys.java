@@ -61,10 +61,10 @@ public class AgitatorSys extends SubsystemBase {
         }else{
             if(shooterSys.getDistanceCenterHub() > 6){
             agitatorMtr.set(0.75);
-            feederMtr.set(0.15);
+            feederMtr.set(0.25);
         } else {
             agitatorMtr.set(0.75);
-            feederMtr.set(0.25);
+            feederMtr.set(0.15);
         }
         }
     }

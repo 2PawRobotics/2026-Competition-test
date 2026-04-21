@@ -42,6 +42,7 @@ import frc.robot.commands.functions.IntakeStopCmd;
 import frc.robot.commands.functions.RunShooterFFCmd;
 import frc.robot.commands.functions.AutoAgitatorCmd;
 import frc.robot.commands.drivetrain.AutoAimHubCmd;
+import frc.robot.commands.drivetrain.AimToAllianceZoneCmd;
 
 public class RobotContainer {
     
@@ -69,6 +70,7 @@ public class RobotContainer {
     IntakeStopCmd intakeStopCmd;
     AutoAgitatorCmd autoAgitatorCmd;
     AutoAimHubCmd autoAimHubCmd;
+    AimToAllianceZoneCmd aimToAllianceZoneCmd;
 
     //Initialize auto selector.
     SendableChooser<Command> autoSelector = new SendableChooser<Command>();
@@ -107,6 +109,7 @@ public class RobotContainer {
         intakeStopCmd = new IntakeStopCmd(intakeSys);
         autoAgitatorCmd = new AutoAgitatorCmd(agitatorSys, 0);
         autoAimHubCmd = new AutoAimHubCmd(swerveSys, 0.5);
+        aimToAllianceZoneCmd = new AimToAllianceZoneCmd(swerveSys);
             
 
         new EventTrigger("Intake2").onTrue(new IntakeCmd(intakeSys, false));
@@ -123,7 +126,7 @@ public class RobotContainer {
     operatorController.a().whileTrue(new AgitatorCmd(agitatorSys, true));
     operatorController.leftTrigger().whileTrue(new IntakeCmd(intakeSys, false));
     operatorController.leftBumper().whileTrue(new IntakeCmd(intakeSys, true));
-    operatorController.x().whileTrue(new RunShooterFFCmd(shooterSys, 5375));
+    operatorController.x().whileTrue(new RunShooterFFCmd(shooterSys, 2500));
     operatorController.rightTrigger().whileTrue(new RunShooterFFCmd(shooterSys, shooterSys.getShooterRPM()));
     }
 
@@ -143,6 +146,7 @@ public class RobotContainer {
            .whileTrue(new LockCmd(swerveSys));
 
         driverController.rightTrigger().whileTrue(new AimToHubCmd(swerveSys));
+        driverController.rightBumper().whileTrue(new AimToAllianceZoneCmd(swerveSys));
     }
 
     public Command getAutonomousCommand() {

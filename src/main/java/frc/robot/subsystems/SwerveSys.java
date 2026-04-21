@@ -124,7 +124,7 @@ public class SwerveSys extends SubsystemBase {
             getModulePositions(),
             new Pose2d(),
             VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(0.25)),
-            VecBuilder.fill(0.30, 0.30, Units.degreesToRadians(40.0)));
+            VecBuilder.fill(0.30, 0.30, Units.degreesToRadians(4000000)));
 
     private final LimelightPoseEstimator[] limelightPoseEstimators = new LimelightPoseEstimator[] {
         new LimelightPoseEstimator(VisionConstants.LimelightName)

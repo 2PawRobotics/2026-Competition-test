@@ -43,6 +43,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 public class ShooterSys extends SubsystemBase {
 
     SparkFlex shooterMtr;
+    SparkFlex shooterMtr2;
     RelativeEncoder shooterEnc;
     SparkClosedLoopController shooterController;
     SwerveSys swerveSys;
@@ -51,6 +52,7 @@ public class ShooterSys extends SubsystemBase {
         this.swerveSys = swerveSys;
         
         shooterMtr = new SparkFlex(CANDevices.shooterMtrId, MotorType.kBrushless);
+        //shooterMtr2 = new SparkFlex(CANDevices.shooterMtr2Id, MotorType.kBrushless);
         shooterEnc = shooterMtr.getEncoder();
         shooterController = shooterMtr.getClosedLoopController();
 
@@ -69,7 +71,21 @@ public class ShooterSys extends SubsystemBase {
 
         shooterMtr.configure(shooterConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-        
+        /*SparkFlexConfig shooter2Config = new SparkFlexConfig();
+        shooter2Config
+            .inverted(false)
+            .idleMode(IdleMode.kCoast)
+            .smartCurrentLimit(ShooterConstants.stallLimitAmps, ShooterConstants.freeLimitAmps, ShooterConstants.maxRPM)
+            .follow(CANDevices.shooterMtrId);
+        shooter2Config.encoder
+            .positionConversionFactor(1)
+            .velocityConversionFactor(1)
+            .uvwMeasurementPeriod(15);
+        shooter2Config.closedLoop
+            .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+            .pid(ShooterConstants.shooterkP, ShooterConstants.shooterkI, ShooterConstants.shooterkD);
+
+        shooterMtr2.configure(shooter2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);*/
     }
 
      // Mutable holder for unit-safe voltage values, persisted to avoid reallocation.
@@ -185,7 +201,7 @@ public class ShooterSys extends SubsystemBase {
 
     public double desiredRPM() {
 
-        return (300 * getDistanceCenterHub()) + 2087.5;
+        return 6500;//(300 * getDistanceCenterHub()) + 2087.5;
 
     }
 

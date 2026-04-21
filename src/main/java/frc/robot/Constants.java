@@ -45,6 +45,7 @@ public class Constants {
 
         // Shooter
         public static final int shooterMtrId = 15;
+        public static final int shooterMtr2Id = 19;
 
         // Agitator
         public static final int agitatorMtrId = 16;

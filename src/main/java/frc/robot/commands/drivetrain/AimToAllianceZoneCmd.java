@@ -17,14 +17,14 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.subsystems.SwerveSys;
 
-public class AimToHubCmd extends Command {
+public class AimToAllianceZoneCmd extends Command {
 
     private final SwerveSys swerveSys;
 
     private final ProfiledPIDController aimController;
 
 
-    public AimToHubCmd(SwerveSys swerveSys) {
+    public AimToAllianceZoneCmd(SwerveSys swerveSys) {
         this.swerveSys = swerveSys;
 
         aimController = new ProfiledPIDController(
@@ -44,10 +44,12 @@ public class AimToHubCmd extends Command {
     @Override
     public void execute() {
 
-        PPHolonomicDriveController.overrideRotationFeedback(() -> swerveSys.targetHeading.getRadians());
+        Rotation2d targetHeading = Rotation2d.fromRadians(0);
 
-        if(Math.abs(swerveSys.getHeading().getDegrees() - swerveSys.targetHeading.getDegrees()) > AutoConstants.autoAimToleranceDeg) {
-            double aimRadPerSec = aimController.calculate(swerveSys.getHeading().getRadians(), swerveSys.targetHeading.getRadians());
+        PPHolonomicDriveController.overrideRotationFeedback(() -> targetHeading.getRadians());
+
+        if(Math.abs(swerveSys.getHeading().getDegrees() - targetHeading.getDegrees()) > AutoConstants.autoAimToleranceDeg) {
+            double aimRadPerSec = aimController.calculate(swerveSys.getHeading().getRadians(), targetHeading.getRadians());
             swerveSys.setOmegaOverrideRadPerSec(Optional.of(aimRadPerSec));
         }
         else {
