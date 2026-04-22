@@ -4,17 +4,13 @@ import java.util.Optional;
 
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.AutoConstants;
-import frc.robot.Constants.FieldConstants;
 import frc.robot.subsystems.SwerveSys;
 
 public class AimToAllianceZoneCmd extends Command {
@@ -44,7 +40,7 @@ public class AimToAllianceZoneCmd extends Command {
     @Override
     public void execute() {
 
-        Rotation2d targetHeading = Rotation2d.fromRadians(0);
+        Rotation2d targetHeading = DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red ? Rotation2d.fromRadians((0)) : Rotation2d.fromRadians(180*Math.PI/180);
 
         PPHolonomicDriveController.overrideRotationFeedback(() -> targetHeading.getRadians());
 

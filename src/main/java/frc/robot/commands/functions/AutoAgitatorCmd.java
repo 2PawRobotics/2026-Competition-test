@@ -10,7 +10,7 @@ public class AutoAgitatorCmd extends Command {
     private final Timer timer;
     private final double duration; // seconds
     private static final double START_DELAY = 0.5; // seconds
-    private boolean started = false;
+    boolean started = false;
 
     public AutoAgitatorCmd(AgitatorSys agitatorSys, double duration) {
         this.agitatorSys = agitatorSys;

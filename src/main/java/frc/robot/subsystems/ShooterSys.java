@@ -34,10 +34,8 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.ResetMode;
 import com.revrobotics.PersistMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
-import com.revrobotics.spark.config.SparkMaxConfig;
 
 
 public class ShooterSys extends SubsystemBase {
@@ -201,7 +199,7 @@ public class ShooterSys extends SubsystemBase {
 
     public double desiredRPM() {
 
-        return 6500;//(300 * getDistanceCenterHub()) + 2087.5;
+        return 4250;//(300 * getDistanceCenterHub()) + 2087.5;
 
     }
 

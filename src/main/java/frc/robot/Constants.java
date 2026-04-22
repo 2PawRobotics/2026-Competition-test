@@ -132,7 +132,7 @@ public class Constants {
         /**
          * The rate the robot will spin with full Rot command.
          */
-        public static final double maxTurnSpeedRadPerSec = 3.0 * Math.PI;
+        public static final double maxTurnSpeedRadPerSec = 3.0 * Math.PI;//180*Math.PI/180;
 
         // Set line up the swerve modules and set these values.
 
@@ -181,7 +181,7 @@ public class Constants {
         // Auto aim PID values should ideally be the same as the PathPlanner rotation ones. They are separate for safe measure.
 
         public static final double autoAimkP = 20; //20
-        public static final double autoAimkD = 0.9; //0.9
+        public static final double autoAimkD = 1; //0.9
 
         public static final double autoAimToleranceDeg = 0;
 

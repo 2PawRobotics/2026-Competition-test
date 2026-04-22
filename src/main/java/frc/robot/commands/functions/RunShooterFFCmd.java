@@ -9,7 +9,7 @@ import frc.robot.subsystems.ShooterSys;
 public class RunShooterFFCmd extends Command {
     private final ShooterSys shooter;
     private final SimpleMotorFeedforward ff;
-    private double targetRPM;
+    double targetRPM;
 
     // require shooter so command has exclusive control
     public RunShooterFFCmd(ShooterSys shooter, double targetRPM) {

@@ -7,7 +7,6 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import frc.robot.subsystems.ShooterSys;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANDevices;
@@ -17,9 +16,8 @@ public class AgitatorSys extends SubsystemBase {
     private final SparkMax agitatorMtr;
     private final RelativeEncoder agitatorEnc;
     private final SparkMax feederMtr;
-    private final RelativeEncoder feederEnc;
     private final ShooterSys shooterSys;
-
+    final RelativeEncoder feederEnc;
 
     public AgitatorSys (ShooterSys shooterSys) {
 
@@ -64,7 +62,7 @@ public class AgitatorSys extends SubsystemBase {
             feederMtr.set(0.25);
         } else {
             agitatorMtr.set(0.75);
-            feederMtr.set(0.15);
+            feederMtr.set(0.10);
         }
         }
     }

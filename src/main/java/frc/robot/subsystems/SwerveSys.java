@@ -24,28 +24,16 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.CANDevices;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.util.limelight.LimelightPoseEstimator;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.units.measure.LinearAcceleration;
-import frc.robot.subsystems.LightsSys;
 
 public class SwerveSys extends SubsystemBase {
 
-    private final LightsSys lightsSys;
-
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-    NetworkTableEntry tx = table.getEntry("tx");
-    NetworkTableEntry ty = table.getEntry("ty");
-    NetworkTableEntry ta = table.getEntry("ta");
-
-   
+    final LightsSys lightsSys;
 
     // Initializes swerve module objects
     private final SwerveModule frontLeftMod = 
@@ -90,7 +78,7 @@ public class SwerveSys extends SubsystemBase {
         return isFieldOriented;
     }
 
-    private double speedFactor = 0.5;
+    private double speedFactor = 1;
     public double getSpeedFactor() {
         return speedFactor;
     }
@@ -163,11 +151,11 @@ public class SwerveSys extends SubsystemBase {
         System.out.println(backRightMod.getSteerEncAngle());
 
         //Gets the robotics configuration from Path Planner
-    try{
-      config = RobotConfig.fromGUISettings();
-    } catch (Exception e) {
-      // Handle exception as needed
-      e.printStackTrace();
+        try{
+            config = RobotConfig.fromGUISettings();
+        } catch (Exception e) {
+        // Handle exception as needed
+        e.printStackTrace();
     }
 
     // Configure AutoBuilder last
@@ -212,9 +200,9 @@ public class SwerveSys extends SubsystemBase {
             if(limelightPose.isPresent()) {
                 poseEstimator.addVisionMeasurement(limelightPose.get(), limelightPoseEstimator.getCaptureTimestamp());
             }
-
-        
         }
+
+        // Logic for aim to hub target heading
         if(DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red) {
             targetTranslation = FieldConstants.redAllianceHubPose;
         }
