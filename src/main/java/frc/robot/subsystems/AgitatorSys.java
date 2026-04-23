@@ -56,16 +56,10 @@ public class AgitatorSys extends SubsystemBase {
         if(reverse == true) {
             agitatorMtr.set(-0.75);
             feederMtr.set(-0.20);
-        }else{
-            if(shooterSys.getDistanceCenterHub() > 6){
-            agitatorMtr.set(0.75);
-            feederMtr.set(0.25);
-        } else {
-            agitatorMtr.set(0.75);
-            feederMtr.set(0.10);
+        }else{agitatorMtr.set(0.50);
+            feederMtr.set(0.20);
         }
         }
-    }
 
     /** Returns the current RPM of the agitator motor. */
     public void getAgitatorRPM() {
