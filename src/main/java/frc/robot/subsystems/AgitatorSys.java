@@ -56,8 +56,9 @@ public class AgitatorSys extends SubsystemBase {
         if(reverse == true) {
             agitatorMtr.set(-0.75);
             feederMtr.set(-0.20);
-        }else{agitatorMtr.set(0.50);
-            feederMtr.set(0.20);
+        }else{
+            agitatorMtr.set(0.75);
+            feederMtr.set(0.25);
         }
         }
 
