@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.2368616262482157,
-        "y": 1.69957203994294
+        "x": 3.198045649072753,
+        "y": 1.4666761768901564
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.090813124108415,
-        "y": 1.0655777460770335
+        "x": 4.051997146932953,
+        "y": 0.83268188302425
       },
       "isLocked": false,
       "linkedName": "Hub-Nuteral"
@@ -62,7 +62,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 3.5,
-    "maxAcceleration": 2.1,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 270.0,
     "maxAngularAcceleration": 360.0,
     "nominalVoltage": 12.0,
@@ -76,7 +76,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 59.955839930074006
+    "rotation": 61.40961593920942
   },
   "useDefaultConstraints": true
 }

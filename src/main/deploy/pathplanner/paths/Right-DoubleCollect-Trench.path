@@ -16,40 +16,35 @@
     },
     {
       "anchor": {
-        "x": 5.087089871611982,
-        "y": 0.6774179743223976
+        "x": 5.514065620542081,
+        "y": 0.7032952924393738
       },
       "prevControl": {
-        "x": 5.423495007132666,
-        "y": 0.7032952924393737
+        "x": 5.850470756062765,
+        "y": 0.72917261055635
       },
       "nextControl": {
-        "x": 4.837826250236587,
-        "y": 0.6582438496012131
+        "x": 5.264801999166686,
+        "y": 0.6841211677181893
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.198045649072753,
-        "y": 1.4666761768901564
+        "x": 4.142567760342367,
+        "y": 0.6774179743223976
       },
       "prevControl": {
-        "x": 3.0169044222539223,
-        "y": 0.21162624821683385
+        "x": 4.685991440798858,
+        "y": 0.5997860199714706
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Hub-Nuteral"
+      "linkedName": "RightEndTrench"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1.5393842463014746,
-      "rotationDegrees": 0.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [
@@ -70,7 +65,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 61.40961593920942
+    "rotation": 82.52131049185175
   },
   "reversed": false,
   "folder": null,
